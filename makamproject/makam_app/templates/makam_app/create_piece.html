@@ -1,0 +1,801 @@
+{% extends "base.html" %}
+
+{% block title %}
+Parça Ekle
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <form class="form-group" enctype="multipart/form-data" method="post" id="my_data_form">
+        <h1>Bilgileri Ekle:</h1>
+        <br>
+
+        {% csrf_token %}
+        {{preliminary_data_entry_form.as_p}}
+
+        <hr>
+
+        <br>
+        <!--MAKAM-->
+        <div class="row">
+            <div class="col-5">
+
+                <h1 class="mb-3">Makam Bul:</h1>
+
+                <input id="makam_search" class="form-control mb-3" placeholder="Makam Ara..." />
+
+                <ul id="my_makam_list"></ul>
+
+            </div>
+            <div class="col-7">
+
+                <h1>Eklenen Makamlar:</h1>
+
+                <ul id="selected_makam_list"></ul>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <!--USUL-->
+        <br>
+        <div class="row">
+            <div class="col-5">
+
+                <h1 class="mb-3">Usül Bul:</h1>
+
+                <input id="usul_search" class="form-control mb-3" placeholder="Usul Ara..." />
+
+                <ul id="my_usul_list"></ul>
+
+            </div>
+            <div class="col-7">
+
+                <h1>Eklenen Usüller:</h1>
+
+                <ul id="selected_usul_list"></ul>
+
+            </div>
+        </div>
+
+        <hr>
+
+        <br>
+        <div class="row">
+            <div class="col-5">
+
+                <h1>Form Seç:</h1>
+
+                <select class="form-select" id="my_piece_form_select">
+                    <option disabled selected hidden>Formlar...</option>
+                    <option disabled>--- SAZ MÜZİĞİ ---</option>
+
+                    <option value="taksim">Taksim</option>
+                    <option value="pesrev">Peşrev</option>
+                    <option value="medhal">Medhal</option>
+                    <option value="saz_semaisi">Saz Semaisi</option>
+                    <option value="longa">Longa</option>
+                    <option value="sirto">Sirto</option>
+                    <option value="oyun_havasi">Oyun Havası</option>
+                    <option value="aranagme">Aranağme</option>
+                    <option value="mandira">Mandıra</option>
+                    <option value="etud">Etüd</option>
+                    <option value="zeybek">Zeybek</option>
+                    <option value="hava">Hava</option>
+                    <option value="ciftetelli">Çiftetelli</option>
+                    <option value="bahariye">Bahariye</option>
+                    <option value="karsilama">Karşılama</option>
+                    <option value="mars">Marş</option>
+
+                    <option disabled="true">--- SÖZLÜ MÜZİK - DİNİ - CAMİİ ---</option>
+
+                    <option value="mevlid">Mevlid</option>
+                    <option value="kuranikerim_tilaveti">Kur'ân-ı Kerim Tilaveti</option>
+                    <option value="munacat_temcit">Münacat (Temcit)</option>
+                    <option value="ezan">Ezan</option>
+                    <option value="tekbir">Tekbir</option>
+                    <option value="tesbih_mahvel_surmesi">Tesbih - Mahvel Sürmesi</option>
+                    <option value="salati_ummiye">Salat-ı Ümmiye</option>
+                    <option value="salatu_selam">Salat-ü Selam</option>
+                    <option value="nat">Na't</option>
+                    <option value="sabah_salati">Sabah Salatı</option>
+                    <option value="cuma_salati">Cuma Salatı</option>
+
+                    <option disabled="true">--- SÖZLÜ MÜZİK - DİNİ - TEKKE ---</option>
+
+                    <option value="ayin">Ayin</option>
+                    <option value="miraciye">Miraciye</option>
+                    <option value="nat">Nat</option>
+                    <option value="durak">Durak</option>
+                    <option value="ilahi_tevsih_sugul">İlahi-Tevşih-Şugül</option>
+                    <option value="savt">Savt</option>
+                    <option value="mersiye">Mersiye</option>
+                    <option value="kaside">Kaside</option>
+                    <option value="nevbe">Nevbe</option>
+                    <option value="nefes">Nefes</option>
+                    <option value="semah">Semah</option>
+
+                    <option disabled="true">--- SÖZLÜ MÜZİK - DİN DIŞI ---</option>
+
+                    <option value="kar">Kar</option>
+                    <option value="kar_natik">Kar-natık</option>
+                    <option value="karce">Karçe</option>
+                    <option value="beste">Beste</option>
+                    <option value="nakis_best">Nakış Beste</option>
+                    <option value="murabba_beste">Murabba Beste</option>
+                    <option value="agir_semai">Ağır Semai</option>
+                    <option value="nakis_agir_semai">Nakış Ağır Semai</option>
+                    <option value="murabba_agir_semai">Murabba Ağır Semai</option>
+                    <option value="yuruk_semai">Yürük Semai</option>
+                    <option value="nakis_yuruk_semai">Nakış Yürük Semai</option>
+                    <option value="murabba_yuruk_semai">Murabba Yürük Semai</option>
+                    <option value="gazel">Gazel</option>
+                    <option value="sarki">Şarkı</option>
+                    <option value="divan">Divan</option>
+                    <option value="kocekce">Köçekçe</option>
+                    <option value="mustezat">Müstezat</option>
+                    <option value="mani">Mani</option>
+                    <option value="kanto">Kanto</option>
+                    <option value="tango">Tango</option>
+                    <option value="operet">Operet</option>
+                    <option value="mars">Marş</option>
+                    <option value="turku">Türkü</option>
+                    <option value="yildiz">Yıldız</option>
+                    <option value="ayvaz">Ayvaz</option>
+                    <option value="kosma">Koşma</option>
+                    <option value="kalenderi">Kalenderi</option>
+                    <option value="destan">Destan</option>
+                    <option value="ninni">Ninni</option>
+
+                </select>
+
+            </div>
+
+            <div class="col-7">
+
+                <h1>Alt Bileşen Ekle:</h1>
+
+                <div class="row">
+                    <div class="col-7">
+                        <select class="form-select" id="form_subcomponent_list">
+                            <option value="1_hane">1. Hane</option>
+                            <option value="2_hane">2. Hane</option>
+                            <option value="3_hane">3. Hane</option>
+                            <option value="4_hane">4. Hane</option>
+                            <option value="5_hane">5. Hane</option>
+                            <option value="6_hane">6. Hane</option>
+                            <option value="7_hane">7. Hane</option>
+                            <option value="8_hane">8. Hane</option>
+                            <option value="mulazime">Mülazime</option>
+                            <option value="teslim">Teslim</option>
+                            <option value="aranagme">Aranağme</option>
+                            <option value="zemin">Zemin</option>
+                            <option value="nakarat">Nakarat</option>
+                            <option value="1_meyan">1. Meyan</option>
+                            <option value="2_meyan">2. Meyan</option>
+                            <option value="3_meyan">3. Meyan</option>
+                            <option value="4_meyan">4. Meyan</option>
+                            <option value="terennum">Terennüm</option>
+                            <option value="meyan_terennumu">Meyan Terennümü</option>
+                            <option value="1_selam">1. Selam</option>
+                            <option value="2_selam">2. Selam</option>
+                            <option value="3_selam">3. Selam</option>
+                            <option value="4_selam">4. Selam</option>
+                            <option value="son_pesrev">Son Peşrev</option>
+                            <option value="son_yuruk_semai">Son Yürük Semai</option>
+                        </select>
+
+                    </div>
+                    <div class="col-5">
+                        <button type="button" onclick="addSelectedFormSubcomponentToList(this)"
+                            class="btn btn-primary"><b>Seçili Bileşeni Ekle</b></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+
+            <ol id="selected_form_subcomponents"></ol>
+
+        </div>
+
+        <hr>
+
+        <br>
+        <input type="submit" value="Submit" id="submit_all">
+        <br>
+
+    </form>
+</div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+
+    //---------------------------------------------------MAKAM KISMI-----------------------------------------------------
+
+    const my_makam_data = '{{mkm_json}}'        // view contextinden geldi, modeldeki veri
+    const cleaned_makam_data = JSON.parse(my_makam_data.replace(/&quot;/g, '"'))        // gelen verinin formatını düzelt
+
+    const my_makam_input = document.getElementById('makam_search')      // input barı al
+
+    let makamFiltered = []      // bu html'de gözüken
+    let selected_makams = []    // bu da backende'e yollanan
+
+    my_makam_input.addEventListener('keyup', (e) => { // yazma işlemini dinle
+
+        my_makam_list.innerHTML = ""    // her keyup'ta html'i bir kez temizle, yoksa duplicate olmaya başlıyor
+
+        if (my_makam_input.value.length !== 0) {    // eğer input bar'da bişeyler varsa
+            // html'e veri ekle, e.target yani my_makam_input'a yazılanlar makam name'de var mı ona bak, 10 eleman al
+            makamFiltered = cleaned_makam_data.filter(makam => makam['name'].includes(e.target.value)).slice(0, 10)
+        }
+        else {
+            makamFiltered = []                  // eğer input bar'da bir şey yoksa listeyi boşalt
+            my_makam_list.innerHTML = ""        // ayrıca html'i de boşalt, muhtemelen gerek yok
+        }
+
+        if (makamFiltered.length > 0) {         // eğer herhangi bir makam eklendiyse
+
+            makamFiltered.map(makam => {
+                my_makam_list.innerHTML += `<li>${makam['name']}</li>` // listeden onları al, html'e ekle
+            })
+
+        }
+    })
+
+    document.getElementById("my_makam_list").addEventListener("click", function (e) {
+
+        if (e.target && e.target.nodeName == "LI") {
+
+            selected_makams.push(e.target.innerHTML);
+
+            selected_makam_list.innerHTML +=
+                `
+            <li id="${e.target.innerHTML}">
+                <div class="row">
+                    <div class="col-11">
+                        ${e.target.innerHTML}
+                    </div>
+                    <div class="col-1">
+                        <button type="button" onclick="removeMakamFromList(this)" class="btn btn-primary"><b>X</b></button>
+                    </div>
+                </div>
+            </li>
+            `
+        };
+
+    });
+
+    function removeMakamFromList(elem) {
+        selected_makams.splice(selected_makams.indexOf(elem.parentNode.parentNode.parentNode.id), 1);
+        document.getElementById(elem.parentNode.parentNode.parentNode.id).remove();
+    }
+
+    //--------------------------------------------------- MAKAM KISMI -----------------------------------------------------
+    //--------------------------------------------------- USUL KISMI ------------------------------------------------------
+
+    class Usul {
+
+        constructor(isim, adet, cesit, olcu) {
+            this.isim = isim;
+            this.adet = adet;
+            this.cesit = cesit;
+            this.olcu = olcu;
+        }
+    }
+
+    const my_usul_data = '{{usl_json}}' // contexten usul isimlerini al
+    const cleaned_usul_data = JSON.parse(my_usul_data.replace(/&quot;/g, '"')) // temizle
+
+    const my_usul_input = document.getElementById('usul_search') // input girilen yeri al
+
+    let usulFiltered = []
+    let selected_usuls = [] // seçilen usulleri backende yollamak için array
+
+
+    my_usul_input.addEventListener('keyup', (e) => {
+
+        my_usul_list.innerHTML = ""
+
+        if (my_usul_input.value.length !== 0) {
+            usulFiltered = cleaned_usul_data.filter(usul => usul['name'].includes(e.target.value)).slice(0, 10)
+        }
+        else {
+            usulFiltered = []
+            my_usul_list.innerHTML = ""
+        }
+
+        if (usulFiltered.length > 0) {
+
+            usulFiltered.map(usul => {
+                my_usul_list.innerHTML += `<li>${usul['name']}</li>`
+            })
+
+        }
+    })
+
+    let usul_mertebe_adet_list = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 21, 22, 24, 26, 28, 32, 38, 48, 64, 88,]
+    let usul_mertebe_cesit_list = [2, 4, 8, 16];
+
+    // mutationların izlenildiği target
+    const targetNode = document.getElementById('selected_usul_list');
+
+    // Options for the observer (which mutations to observe)
+    const config = { attributes: false, childList: true, subtree: false };
+
+    //Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+
+        for (const mutation of mutationList) {
+
+            if (mutation.type === 'childList') {
+
+                // burada otomatik olarak her seçilen usul için select oluşturuyorum.
+
+                var last_added_usul_location = mutation.target.children.length - 1;
+
+                var last_added_usul_id = mutation.target.children.item(last_added_usul_location).id;
+                var last_added_usul_mertebe_adet = mutation.target.children.item(last_added_usul_location).querySelector('#' + last_added_usul_id + '_mertebe_adet');
+                var last_added_usul_mertebe_cesit = mutation.target.children.item(last_added_usul_location).querySelector('#' + last_added_usul_id + '_mertebe_cesit');
+                var last_added_usul_olcu_sayisi = mutation.target.children.item(last_added_usul_location).querySelector('#' + last_added_usul_id + '_olcu_sayisi');
+
+                var select_usul_mertebe_adet = document.createElement("select");
+                var select_usul_mertebe_cesit = document.createElement("select");
+                var input_usul_olcu_sayisi = document.createElement("input");
+
+                select_usul_mertebe_adet.id = last_added_usul_id + '_select_mertebe_adet';
+                select_usul_mertebe_cesit.id = last_added_usul_id + '_select_mertebe_cesit';
+
+
+                for (let i = 0; i < usul_mertebe_adet_list.length; i++) {
+                    var newUsulMertebeAdetOption = document.createElement("option");
+                    newUsulMertebeAdetOption.value = usul_mertebe_adet_list[i];
+                    newUsulMertebeAdetOption.text = usul_mertebe_adet_list[i];
+                    newUsulMertebeAdetOption.classList.add("form-select");
+                    select_usul_mertebe_adet.appendChild(newUsulMertebeAdetOption);
+                }
+
+
+                for (let i = 0; i < usul_mertebe_cesit_list.length; i++) {
+                    var newUsulMertebeCesitOption = document.createElement("option");
+                    newUsulMertebeCesitOption.value = usul_mertebe_cesit_list[i];
+                    newUsulMertebeCesitOption.text = usul_mertebe_cesit_list[i];
+                    newUsulMertebeCesitOption.classList.add("form-select");
+                    select_usul_mertebe_cesit.appendChild(newUsulMertebeCesitOption);
+                }
+
+                input_usul_olcu_sayisi.id = last_added_usul_id + '_input_olcu_sayisi';
+                input_usul_olcu_sayisi.type = "number";
+
+
+                last_added_usul_mertebe_adet.append(select_usul_mertebe_adet);
+                last_added_usul_mertebe_cesit.append(select_usul_mertebe_cesit);
+                last_added_usul_olcu_sayisi.append(input_usul_olcu_sayisi);
+            }
+        }
+    };
+
+    const observer = new MutationObserver(callback);
+
+    document.getElementById("my_usul_list").addEventListener("click", function (e) {
+
+        observer.observe(targetNode, config);
+
+        if (e.target && e.target.nodeName == "LI") {
+
+            // targetNode'u mutasyonun orada aldım, id'si selected_usul_list olan liste aslında bu.
+            targetNode.insertAdjacentHTML('beforeend', `
+            <li id="${e.target.innerHTML}">
+                <div class="row">
+                    <div class="col-3">
+                        ${e.target.innerHTML}
+                    </div>
+                    <div id="${e.target.innerHTML}_mertebe_adet" class="col-2">Adet: 
+                        
+                    </div>
+                    <div id="${e.target.innerHTML}_mertebe_cesit" class="col-2">Cesit:
+                        
+                    </div>
+                    <div id="${e.target.innerHTML}_olcu_sayisi" class="col-4">Olcu: 
+                        
+                    </div>
+                    <div class="col-1">
+                        <button type="button" onclick="removeUsulFromList(this)" class="btn btn-primary"><b>X</b></button>
+                    </div>
+                </div>
+            </li>
+            `);
+
+            selected_usuls.push(e.target.innerHTML); // çeşninin ait olduğu usuller için kullanılıyor.
+        };
+
+    });
+
+
+    function removeUsulFromList(elem) {
+        observer.disconnect();
+        selected_usuls.splice(selected_usuls.indexOf(elem.parentNode.parentNode.parentNode.id), 1);
+        document.getElementById(elem.parentNode.parentNode.parentNode.id).remove();
+    }
+
+    function createUsulObjectsReturnArray() {
+
+        // li olan childları al, bunlar eklenen usuller:
+        added_usuls = targetNode.querySelectorAll('li');
+
+        let added_Usul_array = [];
+
+        for (let i = 0; i < added_usuls.length; i++) {
+
+            mertebe_adet_select_element = added_usuls[i]
+                .querySelector('#' + added_usuls[i].id + '_mertebe_adet')
+                .querySelector('#' + added_usuls[i].id + '_select_mertebe_adet');
+
+            mertebe_cesit_select_element = added_usuls[i]
+                .querySelector('#' + added_usuls[i].id + '_mertebe_cesit')
+                .querySelector('#' + added_usuls[i].id + '_select_mertebe_cesit');
+
+            usul_olcu_element = added_usuls[i]
+                .querySelector('#' + added_usuls[i].id + '_olcu_sayisi')
+                .querySelector('#' + added_usuls[i].id + '_input_olcu_sayisi');
+
+            var usul_isim = added_usuls[i].id
+            var mertebe_adet_value = mertebe_adet_select_element.options[mertebe_adet_select_element.selectedIndex].value;
+            var mertebe_cesit_value = mertebe_cesit_select_element.options[mertebe_cesit_select_element.selectedIndex].value;
+            var usul_olcu_value = usul_olcu_element.value;
+
+            added_Usul = new Usul(usul_isim, mertebe_adet_value, mertebe_cesit_value, usul_olcu_value);
+
+            added_Usul_array.push(added_Usul);
+        }
+
+        return added_Usul_array;
+    }
+
+    //--------------------------------------------------- USUL KISMI ------------------------------------------------------
+    //--------------------------------------------------- FORM KISMI ------------------------------------------------------
+
+    class Subcomponent {
+        constructor(subcomponent_isim, cesni) {
+            this.subcomponent_isim = subcomponent_isim;
+            this.cesni = cesni;
+        }
+
+    }
+
+    class Cesni {
+
+        constructor(cesni_isim, perde, buyukluk, ait_oldugu_usul, olcu_sayisi, dortluk_sayisi, sekizlik_sayisi, onaltilik_sayisi) {
+            this.cesni_isim = cesni_isim;
+            this.perde = perde;
+            this.buyukluk = buyukluk;
+            this.ait_oldugu_usul = ait_oldugu_usul;
+            this.olcu_sayisi = olcu_sayisi;
+            this.dortluk_sayisi = dortluk_sayisi;
+            this.sekizlik_sayisi = sekizlik_sayisi;
+            this.onaltilik_sayisi = onaltilik_sayisi;
+        }
+    }
+
+    var selected_form_name = document.getElementById('my_piece_form_select');
+
+    var available_subcomponents_list = document.getElementById('form_subcomponent_list');
+    var selected_subcomponents_list = document.getElementById('selected_form_subcomponents');
+
+    function addSelectedFormSubcomponentToList() {
+
+        let selected_option_value = available_subcomponents_list.value;
+        let selected_option_text = available_subcomponents_list.options[available_subcomponents_list.selectedIndex].text;
+
+        selected_subcomponents_list.insertAdjacentHTML('beforeend', `
+            <li class="my_form_subcomponent" id="${selected_option_value}_list_item">
+
+                <div class="container">
+                    
+                    <div class="row" id="${selected_option_value}_item_row">
+
+                        <div class="col-2">
+                            <h3 class="my_form_subcomponent_name" id="${selected_option_value}"> ${selected_option_text}</h3>
+                        </div>
+
+                        <div class="col-8">
+
+                            <div class="row">
+
+                                <div class="col-3">
+                                    <h6>Eklenecek Çeşni:</h6>
+                                </div>
+
+                                <div class="col-5">
+
+                                    <select class='cesni_select_class' id="${selected_option_value}_cesni_options">
+                                        <option value="rast_cesnisi">Rast Çeşnisi</option>
+                                        <option value="usak_cesnisi">Uşak Çeşnisi</option>
+                                        <option value="huseyni_cesnisi">Hüseyni Çeşnisi</option>
+                                        <option value="cargah_cesnisi">Çargah Çeşnisi</option>
+                                        <option value="buselik_cesnisi">Buselik Çeşnisi</option>
+                                        <option value="kurdi_cesnisi">Kürdi Çeşnisi</option>
+                                        <option value="hicaz_cesnisi">Hicaz Çeşnisi</option>
+                                        <option value="hicaz_huzzam_cesnisi">Hicaz (Hüzzam)</option>
+                                        <option value="segah_cesnisi">Segah Çeşnisi</option>
+                                        <option value="ferahnak_cesnisi">Ferahnak Çeşnisi</option>
+                                        <option value="mustear_cesnisi">Müstear Çeşnisi</option>
+                                        <option value="huzzam_cesnisi">Hüzzam Çeşnisi</option>
+                                        <option value="saba_cesnisi">Saba Çeşnisi</option>
+                                        <option value="nisabur_cesnisi">Nişabur Çeşnisi</option>
+                                        <option value="nikriz_cesnisi">Nikriz Çeşnisi</option>
+                                        <option value="pencgah_cesnisi">Pençgah Çeşnisi</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="col-4">
+                                    <button type="button" onclick="addCesniRowToSubcomponent(this)" class="btn btn-primary"><b>Seçili Çeşniyi Ekle</b></button>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-1">
+                            <button type="button" onclick="removeSubcomponentFromList(this)" class="btn btn-primary"><b>X</b></button>
+                        </div>
+
+                        <div class="row">
+                            <ol class="added_cesni_list_class" id="${selected_option_value}_added_cesni_list"></ol>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br>
+            </li>
+            `);
+    }
+
+    function removeSubcomponentFromList(elem) {
+        // selected_usuls.splice(selected_usuls.indexOf(elem.parentNode.parentNode.parentNode.id), 1);
+
+        elem.parentNode.parentNode.parentNode.parentNode.remove();
+    }
+
+    function addCesniRowToSubcomponent(elem) {
+
+        // seçilen çeşniyi al:
+        let cesni_select_element = elem.parentNode.parentNode.querySelector(".cesni_select_class");
+
+        // seçilen çeşninin text ve valuesunu al:
+        let selected_cesni_text = cesni_select_element.options[cesni_select_element.selectedIndex].text;
+        let selected_cesni_value = cesni_select_element.value;
+
+        // çeşnilerin ekleneceği listeyi al:
+        let added_cesni_list = elem.parentNode.parentNode.parentNode.parentNode.querySelector(".added_cesni_list_class");
+
+        // listeye eklenecek çeşni itemini oluştur:
+        let selectedCesniOption = document.createElement("li");
+        selectedCesniOption.classList.add("mt-3");
+        selectedCesniOption.id = selected_cesni_value + "_item";
+
+        // iteme html ekle:
+        selectedCesniOption.insertAdjacentHTML('beforeend', `
+            <div class="row">
+                <div class="selected_cesni_title" id="${selected_cesni_value}" class="col-1">
+                    <h6>${selected_cesni_text}</h6>
+                </div>
+                <div class="col-2">
+                    <h6>Perde: </h6>
+                    <select class="cesni_perde" id="${selected_cesni_value}_perde_select">
+                        <option value="kaba_cargah">Kaba Çargah</option>
+                        <option value="yegah">Yegah</option>
+                        <option value="huseyni">Hüseyni Aşiran</option>
+                        <option value="acem_asiran">Acem Aşiran</option>
+                        <option value="rast">Rast</option>
+                        <option value="dugah">Dügah</option>
+                        <option value="buselik">Buselik</option>
+                        <option value="cargah">Çargah</option>
+                        <option value="neva">Neva</option>
+                        <option value="huseyni">Hüseyni</option>
+                        <option value="acem">Acem</option>
+                        <option value="gerdaniye">Gerdaniye</option>
+                        <option value="muhayyer">Muhayyer</option>
+                        <option value="kaba_nim_hicaz">Kaba Nim Hicaz</option>
+                        <option value="kaba_nim_hisar">Kaba Nim Hisar</option>
+                        <option value="dik_acem_asiran">Dik Acem Aşiran</option>
+                        <option value="nim_zirgule">Nim Zirgüle</option>
+                        <option value="kurdi">Kürdi</option>
+                        <option value="dik_buselik">Dik Buselik</option>
+                        <option value="nim_hicaz">Nim Hicaz</option>
+                        <option value="nim_hisar">Nim Hisar</option>
+                        <option value="dik_acem">Dik Acem</option>
+                        <option value="nim_sehnaz">Nim Şehnaz</option>
+                        <option value="sunbule">Sünbüle</option>
+                        <option value="kaba_hicaz">Kaba hicaz</option>
+                        <option value="kaba_hisar">Kaba Hisar</option>
+                        <option value="irak">Irak</option>
+                        <option value="zirgule">Zirgüle</option>
+                        <option value="dik_kirdi">Dik Kirdi</option>
+                        <option value="hicaz">Hicaz</option>
+                        <option value="hisar">Hisar</option>
+                        <option value="evic">Eviç</option>
+                        <option value="sehnaz">Şehnaz</option>
+                        <option value="dik_sunbule">Dik Sünbüle</option>
+                        <option value="kaba_dik_hicaz">Kaba Dik Hicaz</option>
+                        <option value="kaba_dik_hisar">Kaba Dik Hisar</option>
+                        <option value="gevest">Geveşt</option>
+                        <option value="dik_zirgule">Dik Zirgüle</option>
+                        <option value="segah">Segah</option>
+                        <option value="dik_hicaz">Dik Hicaz</option>
+                        <option value="dik_hisar">Dik Hisar</option>
+                        <option value="mahur">Mahur</option>
+                        <option value="dik_sehnaz">Dik Şehnaz</option>
+                        <option value="tiz_segah">Tiz Segah</option>
+                        <option value="dik_gevest">Dik Geveşt</option>
+                        <option value="dik_mahur">Dik Mahur</option>
+                    </select>
+                </div>
+                <div class="col-1">
+                    <h6>Büyüklük: </h6>
+                    <select class="cesni_buyukluk" id="${selected_cesni_value}_cesni_buyukluk">
+                        <option value="3">3'lü</option>
+                        <option value="4">4'lü</option>
+                        <option value="5">5'li</option>
+                        <option value="6">6'lı</option>
+                    </select>
+                </div>
+                <div class="col-8">
+                    <div class="row">
+                        
+                        <div class="col-3">
+                            <h6>Ölçü Sayısı: </h6>
+                            <input class="cesni_olcu" id="${selected_cesni_value}_olcu_sayisi" type="number">
+                        </div>
+
+                        <div class="col-3">
+                            <h6>Dörtlük Sayısı: </h6>
+                            <input class="cesni_dortluk" id="${selected_cesni_value}_dortluk" type="number">
+                        </div>
+                        
+                        <div class="col-3">
+                            <h6>Sekizlik Sayısı: </h6>
+                            <input class="cesni_sekizlik" id="${selected_cesni_value}_sekizlik" type="number">
+                        </div>
+                        
+                        <div class="col-3">
+                            <h6>Onaltılık Sayısı: </h6>
+                            <input class="cesni_onaltilik" id="${selected_cesni_value}_onaltilik" type="number">
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-1">
+                    <button type="button" onclick="removeCesniFromList(this)" class="btn btn-primary"><b>X</b></button>
+                </div>
+                
+                <div class="col-3">
+                    <h6>Ait olduğu usül: </h6>   
+                    <select class="available_usul_list" id="${selected_cesni_value}_belonging_usul_list"></select>
+                </div>
+            </div>
+            `);
+
+        added_cesni_list.appendChild(selectedCesniOption);
+
+        populateCesniAvailableSelect();
+    }
+
+    function populateCesniAvailableSelect() {
+        cesni_usuls_select = document.getElementsByClassName('available_usul_list');
+
+        let available_usul_array = [];
+
+        for (const usul of selected_usuls) {
+            let newUsul = document.createElement("option");
+            newUsul.text = usul;
+            newUsul.value = usul;
+
+            available_usul_array.push(newUsul)
+        }
+
+        for (const cesni_usul of cesni_usuls_select) {
+
+            for (const newUsul of available_usul_array) {
+                cesni_usul.appendChild(newUsul);
+            }
+
+        }
+    }
+
+    function removeCesniFromList(elem) {
+        elem.parentNode.parentNode.parentNode.remove();
+    }
+
+    function createFormSubcomponentAndCesniObjectsReturnArray() {
+
+        let all_subcomponents = selected_subcomponents_list.querySelectorAll(".my_form_subcomponent");
+
+        let subcomponent_array = [];
+
+        for (const subcomponent of all_subcomponents) {
+
+            my_form_name = subcomponent.querySelector(".my_form_subcomponent_name").id;
+
+            let my_cesni_list = subcomponent.querySelector(".added_cesni_list_class");
+
+            let newCesniArray = [];
+
+            for (const cesni of my_cesni_list.children) {
+
+                let top_data_row = cesni.children[0];
+                let bottom_data_row = cesni.children[1];
+
+                let newCesniIsim = top_data_row.querySelector(".selected_cesni_title").id;
+                let newCesniPerde = top_data_row.querySelector(".cesni_perde").value;
+                let newCesniBuyukluk = top_data_row.querySelector(".cesni_buyukluk").value;
+                let newCesniOlcu = top_data_row.querySelector(".cesni_olcu").value;
+                let newCesniUsul = bottom_data_row.querySelector(".available_usul_list").value;
+                let newCesniDortluk = top_data_row.querySelector(".cesni_dortluk").value;
+                let newCesniSekizlik = top_data_row.querySelector(".cesni_sekizlik").value;
+                let newCesniOnaltilik = top_data_row.querySelector(".cesni_onaltilik").value;
+
+                let newCesni = new Cesni(
+                    newCesniIsim,
+                    newCesniPerde,
+                    newCesniBuyukluk,
+                    newCesniOlcu,
+                    newCesniUsul,
+                    newCesniDortluk,
+                    newCesniSekizlik,
+                    newCesniOnaltilik
+                );
+
+                newCesniArray.push(newCesni);
+            }
+
+            let newSubcomponent = new Subcomponent(my_form_name, newCesniArray);
+
+            subcomponent_array.push(newSubcomponent);
+        }
+
+        return subcomponent_array;
+    }
+
+
+
+    //--------------------------------------------------- FORM KISMI ------------------------------------------------------
+
+    $('#submit_all').click(function (event) {
+
+        event.preventDefault();
+
+        usul_array = createUsulObjectsReturnArray();
+        subcomponent_array = createFormSubcomponentAndCesniObjectsReturnArray();
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'makam_app:CreatePieceView' %}",
+            dataType: 'json',
+            data: $('form#my_data_form').serialize() + '&selected_makams=' + selected_makams + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
+            success: function (data) {
+                alert("Yeni parça başarıyla oluşturuldu.");
+                console.log(data);
+                window.location.href = data.url;
+            },
+            error: function (data) {
+
+            }
+        });
+
+    });
+
+</script>
+{% endblock scripts %}
