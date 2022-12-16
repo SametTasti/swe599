@@ -351,6 +351,8 @@ Parça Ekle
                 var select_usul_mertebe_cesit = document.createElement("select");
                 var input_usul_olcu_sayisi = document.createElement("input");
 
+                last_added_usul_id = last_added_usul_id.replace(/\s/g, '_');
+
                 select_usul_mertebe_adet.id = last_added_usul_id + '_select_mertebe_adet';
                 select_usul_mertebe_cesit.id = last_added_usul_id + '_select_mertebe_cesit';
 
@@ -374,8 +376,7 @@ Parça Ekle
 
                 input_usul_olcu_sayisi.id = last_added_usul_id + '_input_olcu_sayisi';
                 input_usul_olcu_sayisi.type = "number";
-
-
+            
                 last_added_usul_mertebe_adet.append(select_usul_mertebe_adet);
                 last_added_usul_mertebe_cesit.append(select_usul_mertebe_cesit);
                 last_added_usul_olcu_sayisi.append(input_usul_olcu_sayisi);
@@ -391,20 +392,23 @@ Parça Ekle
 
         if (e.target && e.target.nodeName == "LI") {
 
+            mertebe_id = e.target.innerHTML;
+            mertebe_id = mertebe_id.replace(/\s/g, '_');
+
             // targetNode'u mutasyonun orada aldım, id'si selected_usul_list olan liste aslında bu.
             targetNode.insertAdjacentHTML('beforeend', `
-            <li id="${e.target.innerHTML}">
+            <li id="${mertebe_id}">
                 <div class="row">
                     <div class="col-3">
-                        ${e.target.innerHTML}
+                        ${mertebe_id}
                     </div>
-                    <div id="${e.target.innerHTML}_mertebe_adet" class="col-2">Adet: 
+                    <div id="${mertebe_id}_mertebe_adet" class="col-2">Adet: 
                         
                     </div>
-                    <div id="${e.target.innerHTML}_mertebe_cesit" class="col-2">Cesit:
+                    <div id="${mertebe_id}_mertebe_cesit" class="col-2">Cesit:
                         
                     </div>
-                    <div id="${e.target.innerHTML}_olcu_sayisi" class="col-4">Olcu: 
+                    <div id="${mertebe_id}_olcu_sayisi" class="col-4">Olcu: 
                         
                     </div>
                     <div class="col-1">
@@ -777,17 +781,18 @@ Parça Ekle
 
         event.preventDefault();
 
-        usul_array = createUsulObjectsReturnArray();
-        subcomponent_array = createFormSubcomponentAndCesniObjectsReturnArray();
+        let usul_array = createUsulObjectsReturnArray();
+        let subcomponent_array = createFormSubcomponentAndCesniObjectsReturnArray();
+        let form_name = document.getElementById('my_piece_form_select').value;
 
         $.ajax({
             type: 'POST',
             url: "{% url 'makam_app:CreatePieceView' %}",
             dataType: 'json',
-            data: $('form#my_data_form').serialize() + '&selected_makams=' + selected_makams + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
+            data: $('form#my_data_form').serialize() + '&selected_makams=' + JSON.stringify(selected_makams) + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_form=' + JSON.stringify(form_name) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
+
             success: function (data) {
                 alert("Yeni parça başarıyla oluşturuldu.");
-                console.log(data);
                 window.location.href = data.url;
             },
             error: function (data) {

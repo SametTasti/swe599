@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .forms import PreliminaryDataEntryForm
-from .models import Makam, Usul
+from .models import Makam, Usul, Piece
 import json
 import ast  # ajax ile gelen dictionary'i parse'lamak için
 
@@ -17,31 +17,26 @@ def CreatePieceView(request):
 
     if request.method == 'POST':
 
-        preliminary_data_entry_form = PreliminaryDataEntryForm(request.POST)
+        newPiece = Piece(
+            eser_adi=request.POST.get('eser_adi'),
+            bestekar=request.POST.get('bestekar'),
+            yuzyil=request.POST.get('yuzyil'),
+            gufte_yazari=request.POST.get('gufte_yazari'),
+            gufte_vezin=request.POST.get('gufte_vezin'),
+            gufte_nazim_bicim=request.POST.get('gufte_nzmbcm'),
+            gufte_nazim_tur=request.POST.get('gufte_nzmtur'),
+            makam=request.POST.get('selected_makams'),
+            usul=request.POST.get('selected_usuls'),
+            form=request.POST.get('selected_form'),
+            subcomponents=request.POST.get('selected_subcomponents'),
+        )
 
-        if preliminary_data_entry_form.is_valid():
-            # print(preliminary_data_entry_form.cleaned_data)
+        newPiece.save()
 
-            subcomponents = request.POST.get('selected_subcomponents')
-            parsed_subcomponents = ast.literal_eval(subcomponents)
-            usuls = request.POST.get('selected_usuls')
-            parsed_usuls = ast.literal_eval(usuls)
-
-            print(parsed_subcomponents)
-            print(parsed_usuls)
-
-            # burada piece objesi oluştur, modele kaydet
-
-            return JsonResponse({
-                'success': True,
-                'url': reverse("makam_app:HomeView"),
-            })
-
-        else:
-            return JsonResponse({
-                'success': False,
-                'url': reverse("makam_app:HomeView"),
-            })
+        return JsonResponse({
+            'success': True,
+            'url': reverse("makam_app:HomeView"),
+        })
 
     else:
         preliminary_data_entry_form = PreliminaryDataEntryForm()
