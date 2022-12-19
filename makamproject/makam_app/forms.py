@@ -7,8 +7,8 @@ class PreliminaryDataEntryForm(forms.Form):
     gufte_yazari = forms.CharField()
     VEZIN_CHOICES = (
         ('', 'Yok'),
-        ('1', 'Aruz'),
-        ('2', 'Serbest'),
+        ('aruz', 'Aruz'),
+        ('serbest', 'Serbest'),
     )
     gufte_vezin = forms.ChoiceField(widget=forms.Select, choices= VEZIN_CHOICES)
     NZMBCM_CHOICES = (

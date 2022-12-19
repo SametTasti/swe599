@@ -356,8 +356,14 @@ Parça Ekle
                 select_usul_mertebe_adet.id = last_added_usul_id + '_select_mertebe_adet';
                 select_usul_mertebe_cesit.id = last_added_usul_id + '_select_mertebe_cesit';
 
+                var nonSelectableMertebeAdetOption = document.createElement("option");
+                nonSelectableMertebeAdetOption.value = ""
+                nonSelectableMertebeAdetOption.text = 'Adet'
+                nonSelectableMertebeAdetOption.setAttribute("hidden", "selected")
+                select_usul_mertebe_adet.appendChild(nonSelectableMertebeAdetOption);
 
                 for (let i = 0; i < usul_mertebe_adet_list.length; i++) {
+
                     var newUsulMertebeAdetOption = document.createElement("option");
                     newUsulMertebeAdetOption.value = usul_mertebe_adet_list[i];
                     newUsulMertebeAdetOption.text = usul_mertebe_adet_list[i];
@@ -365,6 +371,11 @@ Parça Ekle
                     select_usul_mertebe_adet.appendChild(newUsulMertebeAdetOption);
                 }
 
+                var nonSelectableMertebeCesitOption = document.createElement("option");
+                nonSelectableMertebeCesitOption.value = ""
+                nonSelectableMertebeCesitOption.text = 'Çeşit'
+                nonSelectableMertebeCesitOption.setAttribute("hidden", "selected")
+                select_usul_mertebe_cesit.appendChild(nonSelectableMertebeCesitOption);
 
                 for (let i = 0; i < usul_mertebe_cesit_list.length; i++) {
                     var newUsulMertebeCesitOption = document.createElement("option");
@@ -451,10 +462,7 @@ Parça Ekle
                 .querySelector('#' + added_usuls[i].id + '_olcu_sayisi')
                 .querySelector('#' + added_usuls[i].id + '_input_olcu_sayisi');
 
-            var usul_isim = added_usuls[i].id
-            var mertebe_adet_value = mertebe_adet_select_element.options[mertebe_adet_select_element.selectedIndex].value;
-            var mertebe_cesit_value = mertebe_cesit_select_element.options[mertebe_cesit_select_element.selectedIndex].value;
-            var usul_olcu_value = usul_olcu_element.value;
+
 
             let val_str = String(added_usuls[i].id).toLowerCase();
 
@@ -467,6 +475,9 @@ Parça Ekle
             val_str = val_str.replace(/ç/g, 'c');
 
             var usul_isim = val_str
+            var mertebe_adet_value = mertebe_adet_select_element.options[mertebe_adet_select_element.selectedIndex].value;
+            var mertebe_cesit_value = mertebe_cesit_select_element.options[mertebe_cesit_select_element.selectedIndex].value;
+            var usul_olcu_value = usul_olcu_element.value;
 
             added_Usul = new Usul(usul_isim, mertebe_adet_value, mertebe_cesit_value, usul_olcu_value);
 

@@ -104,117 +104,72 @@ def FindPieceView(request):
 
 def QueryResultsView(request):
 
-    all_piece_data = Piece.objects.all()
+    # if request.method == 'POST':
+    #     return render(request, 'makam_app/find_piece.html', context=context_dict)
+
+    all_pieces = Piece.objects.all()
 
     filter_dict = {}
 
-    icontains_keyword = '__icontains'
-    in_keyword = '__in'
+    for (key, value) in pseudo_context.items():
 
-    for key, value in pseudo_context.items():
-
-        # girilen query verileri varsa ve tipleri liste değilse:
+        # key: arama parametresi başlığı
+        # value: kullanıcının girdiği arama parametresi
+        # buradaki keyler: eser_adi, bestekar, yuzyil, gufte_yazari, gufte_vezin, gufte_nazim_bicim, gufte_nazim_tur, form:
         if value and (type(value) is not list):
-            filter_dict[key + icontains_keyword] = pseudo_context[key]
 
+            # girilen valuelar için çalışıyor bu if, keyler yukarıda!
+
+            my_input_value = pseudo_context[key]
+
+            print(f"{key} : {my_input_value}")
+
+            my_query_string = f"{key}__contains"
+
+            filter_dict[my_query_string] = my_input_value
+
+        # buradaki keyler: makam, usul, subcomponents:
         elif value and (type(value) is list):
+
+            my_input_value = pseudo_context[key]
+
             if key == 'makam':
 
-                number_of_inputted_makams = len(pseudo_context['makam'])
+                print(f"{key} : {my_input_value}")
 
-                # girilen makamları al, filter dicte loopla yolla, kolay
-                for i in range(number_of_inputted_makams):
-                    makam_indice_token = f'__{i}'
+                my_query_string = f"makam__contains"
 
-                    # db'deki parçaların makamlarının girilen inputta yer alıp almadığını kontrol et
-                    filter_dict['makam' + makam_indice_token +
-                                in_keyword] = pseudo_context['makam']
+                filter_dict[my_query_string] = my_input_value
 
             elif key == 'usul':
-                # girilen usulları al, usulda hangi veriler varsa onları filtera yolla
 
-                number_of_inputted_usuls = len(pseudo_context['usul'])
+                print(f"{key} : {my_input_value}")
 
-                for i in range(number_of_inputted_usuls):
+                my_query_string = f"usul__contains"
 
-                    # query string oluştururken kullanılacak
-                    usul_element_indice_token = f'__{i}'
-
-                    # i'inci usul, 0. 1. 2. ... usuller
-                    current_usul = pseudo_context['usul'][i]
-
-                    for usul_property in current_usul:          # seçilen usuldeki alt elementler
-
-                        current_usul_property = current_usul[usul_property]
-
-                        current_property_token = f'__{usul_property}'
-
-                        # usul propertylerine girilen değerler için:
-                        if current_usul_property:
-
-                            filter_dict['usul' + usul_element_indice_token + current_property_token +
-                                        icontains_keyword] = pseudo_context['usul'][i][usul_property]
+                filter_dict[my_query_string] = my_input_value
 
             elif key == 'subcomponents':
 
-                number_of_inputted_subcomponents = len(
-                    pseudo_context['subcomponents'])
+                print(f"{key} : {my_input_value}")
 
-                for i in range(number_of_inputted_subcomponents):
+                my_query_string = f"subcomponents__contains"
 
-                    subcomponent_element_indice_token = f'__{i}'
-
-                    current_subcomponent = pseudo_context['subcomponents'][i]
-
-                    if current_subcomponent:
-
-                        for subcomponent_property in current_subcomponent:
-
-                            if subcomponent_property == 'subcomponent_isim':
-
-                                current_property_token = f'__{subcomponent_property}'
-
-                                filter_dict['subcomponents' + subcomponent_element_indice_token + current_property_token +
-                                            icontains_keyword] = pseudo_context['subcomponents'][i]['subcomponent_isim']
-
-                            elif subcomponent_property == 'cesni':
-
-                                current_cesni_list = pseudo_context['subcomponents'][i]['cesni']
-
-                                if len(current_cesni_list) > 0:
-
-                                    for j in range(len(current_cesni_list)):
-
-                                        cesni_row = current_cesni_list[j]
-
-                                        cesni_row_element_indice_token = f'__{j}'
-
-                                        for cesni_property in cesni_row:
-
-                                            current_property_token = f'__{cesni_property}'
-
-                                            element_value = cesni_row[cesni_property]
-
-                                            if element_value:
-
-                                                # print('subcomponents' + subcomponent_element_indice_token + '__cesni' + cesni_row_element_indice_token + current_property_token +
-                                                #             icontains_keyword)
-
-                                                print('subcomponents' + subcomponent_element_indice_token + '__cesni' + cesni_row_element_indice_token + current_property_token +
-                                                      icontains_keyword)
-
-                                                print(
-                                                    pseudo_context['subcomponents'][i]['cesni'][j][cesni_property])
-
-                                                filter_dict['subcomponents' + subcomponent_element_indice_token + '__cesni' + cesni_row_element_indice_token + current_property_token +
-                                                            icontains_keyword] = pseudo_context['subcomponents'][i]['cesni'][j][cesni_property]
+                filter_dict[my_query_string] = my_input_value
 
     print(filter_dict)
 
-    pieces_found = all_piece_data.filter(**filter_dict)
+    pieces_found = all_pieces.filter(**filter_dict)
+
+    pseudo_context.clear()
+    filter_dict.clear()
 
     context_dict = {
         'pieces_found': pieces_found,
     }
 
     return render(request, 'makam_app/query_results.html', context=context_dict)
+
+
+def AnalysisView(request):
+    pass
