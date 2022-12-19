@@ -6,21 +6,24 @@ class PreliminaryDataEntryForm(forms.Form):
     yuzyil = forms.IntegerField()
     gufte_yazari = forms.CharField()
     VEZIN_CHOICES = (
+        ('', 'Yok'),
         ('1', 'Aruz'),
         ('2', 'Serbest'),
     )
     gufte_vezin = forms.ChoiceField(widget=forms.Select, choices= VEZIN_CHOICES)
     NZMBCM_CHOICES = (
-        ('1', 'Gazel'),
-        ('2', 'Murabba'),
-        ('3', 'Kaside'),
+        ('', 'Yok'),
+        ('gazel', 'Gazel'),
+        ('murabba', 'Murabba'),
+        ('kaside', 'Kaside'),
     )
     gufte_nzmbcm = forms.ChoiceField(
         widget=forms.Select, choices=NZMBCM_CHOICES)
     NZMTUR_CHOICES = (
-        ('1', 'Münacat'),
-        ('2', 'Naat'),
-        ('3', 'Tevhit'),
+        ('', 'Yok'),
+        ('munacat', 'Münacat'),
+        ('naat', 'Naat'),
+        ('tevhit', 'Tevhit'),
     )
     gufte_nzmtur = forms.ChoiceField(
         widget=forms.Select, choices=NZMTUR_CHOICES)

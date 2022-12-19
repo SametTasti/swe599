@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+Arama Sonuçları
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    
+    {% for pieces in pieces_found %}
+
+        {{pieces}}
+    
+    {% endfor %}
+
+</divc>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}
