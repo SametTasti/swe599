@@ -70,6 +70,10 @@ def FindPieceView(request):
         form = json.loads(request.POST.get('selected_form'))
         subcomponents = json.loads(request.POST.get('selected_subcomponents'))
 
+        print(type(makam))
+        print(type(usul))
+        print(type(subcomponents))
+
         pseudo_context['eser_adi'] = eser_adi
         pseudo_context['bestekar'] = bestekar
         pseudo_context['yuzyil'] = yuzyil

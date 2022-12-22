@@ -24,15 +24,64 @@ Arama Sonuçları
 
                         <div class="row">
 
-                            <div class="col md-5">
-                                {{pieces.eser_adi}}
+                            <div class="col-10">
+
+                                <div class="row">
+
+                                    <div class="col-6">
+                                        Eser Adı: {{pieces.eser_adi}}
+                                        <br>
+                                        Bestekar: {{pieces.bestekar}}
+                                    </div>
+                                    
+                                    <div class="col-6">
+                                        {% for subcomponent in pieces.subcomponents %}
+
+                                            Form İsmi: {{subcomponent.subcomponent_isim}}
+                                            <br>
+
+                                            <hr>
+
+                                            {% for key, value in subcomponent.items %}
+
+                                                {% if key == 'cesni' %}
+
+                                                    {% for cesni_element in value %}
+
+                                                        {% for cesni_property_name, cesni_property_value in cesni_element.items %}
+
+                                                            {{cesni_property_name}} : {{cesni_property_value}}
+                                                            <br>
+
+                                                        {% endfor %}
+
+                                                        <hr>
+                                                    {% endfor %}
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                    {% endfor %}
+                                    </div>
+
+                                </div>
+
                             </div>
-                            
-                            <div class="col md-5">
-                            
+
+                            <div class="col-1">
+                                <button type="button" onclick="addPieceToAnalysis(this)"
+                                    class="btn btn-outline-primary"><b>E</b></button>
                             </div>
-                            
+
+                            <div class="col-1">
+                                <button type="button" onclick="removePieceFromAnalysis(this)"
+                                    class="btn btn-outline-danger"><b>X</b></button>
+                            </div>
+
                         </div>
+
+                        <hr>
 
                     </li>
 
@@ -51,7 +100,7 @@ Arama Sonuçları
 
     </div>
 
-    <input type="submit" value="Submit" id="submit_all">
+    <input type="submit" value="Analiz Et" id="submit_all">
 
 </form>
 
@@ -62,23 +111,49 @@ Arama Sonuçları
 
     var selected_piece_pks = [];
     var selected_piece_list = document.getElementById("my_selected_pieces_list");
-    
-    document.getElementById("my_pieces_list").addEventListener("click", function (e) {
-        
-        if (e.target && e.target.nodeName == "LI") {
-            
-            if (!selected_piece_pks.includes(e.target.id)) {
-                
-                selected_piece_pks.push(e.target.id);
-                
-                let selected_piece_option = document.createElement('option');
-                
-            }
-            
-            console.log(selected_piece_pks)
+
+    function addPieceToAnalysis(elem) {
+
+        let selected_piece_id = elem.parentNode.parentNode.parentNode.id;
+
+        if (!selected_piece_pks.includes(selected_piece_id)) {
+
+            selected_piece_pks.push(selected_piece_id);
         }
 
-    });
+        console.log(selected_piece_pks)
+    }
+
+    function removePieceFromAnalysis(elem) {
+
+        let selected_piece_id = elem.parentNode.parentNode.parentNode.id;
+
+        if (selected_piece_pks.includes(selected_piece_id)) {
+
+            selected_piece_pks.pop(selected_piece_id);
+        }
+
+        console.log(selected_piece_pks)
+    }
+
+    // document.getElementById("my_pieces_list").addEventListener("click", function (e) {
+
+    //     console.log(e.target)
+
+    //     if (e.target && e.target.nodeName == "LI") {
+
+    //         if (!selected_piece_pks.includes(e.target.id)) {
+
+    //             selected_piece_pks.push(e.target.id);
+
+    //             let selected_piece_option = document.createElement('option');
+
+    //         }
+
+    //         console.log(selected_piece_pks)
+    //     }
+
+    // });
 
 
     // $('form#my_data_form').serialize() + '&selected_makams=' + JSON.stringify(selected_makams) + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_form=' + JSON.stringify(form_name) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
