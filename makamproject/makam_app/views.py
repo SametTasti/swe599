@@ -104,8 +104,18 @@ def FindPieceView(request):
 
 def QueryResultsView(request):
 
-    # if request.method == 'POST':
-    #     return render(request, 'makam_app/find_piece.html', context=context_dict)
+    if request.method == 'POST':
+        
+        # buraya analiz için seçilen parçaların pk'ları gelecek, sonra o pk'ları filtre ile alıp analiz işlemini yapacağız
+        # sonra da sonuçları yollayacağız 
+
+        a = ast.literal_eval(request.POST.get('testdata'))
+        b = json.loads(request.POST.get('selected_pieces'))
+
+        return JsonResponse({
+            'success': True,
+            'url': reverse("makam_app:AnalysisView"),
+        })
 
     all_pieces = Piece.objects.all()
 
@@ -172,4 +182,5 @@ def QueryResultsView(request):
 
 
 def AnalysisView(request):
-    pass
+
+    return render(request, 'makam_app/analysis.html')
