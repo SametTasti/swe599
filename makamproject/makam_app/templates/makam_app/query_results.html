@@ -119,6 +119,8 @@ Arama Sonuçları
         if (!selected_piece_pks.includes(selected_piece_id)) {
 
             selected_piece_pks.push(selected_piece_id);
+
+            elem.parentNode.parentNode.style.backgroundColor = '#ccffcc';
         }
 
         console.log(selected_piece_pks)
@@ -131,32 +133,12 @@ Arama Sonuçları
         if (selected_piece_pks.includes(selected_piece_id)) {
 
             selected_piece_pks.pop(selected_piece_id);
+
+            elem.parentNode.parentNode.style.backgroundColor = 'white';
         }
 
         console.log(selected_piece_pks)
     }
-
-    // document.getElementById("my_pieces_list").addEventListener("click", function (e) {
-
-    //     console.log(e.target)
-
-    //     if (e.target && e.target.nodeName == "LI") {
-
-    //         if (!selected_piece_pks.includes(e.target.id)) {
-
-    //             selected_piece_pks.push(e.target.id);
-
-    //             let selected_piece_option = document.createElement('option');
-
-    //         }
-
-    //         console.log(selected_piece_pks)
-    //     }
-
-    // });
-
-
-    // $('form#my_data_form').serialize() + '&selected_makams=' + JSON.stringify(selected_makams) + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_form=' + JSON.stringify(form_name) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
 
     $('#submit_all').click(function (event) {
 
@@ -168,7 +150,6 @@ Arama Sonuçları
             dataType: 'json',
             data: {
                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                testdata: '[{"a":"b", "c":"d"}]',
                 selected_pieces: JSON.stringify(selected_piece_pks),
             },
             success: function (data) {
@@ -176,7 +157,7 @@ Arama Sonuçları
                 window.location.href = data.url;
             },
             error: function (data) {
-
+                alert("Parça seçilmedi.")
             }
         });
 
