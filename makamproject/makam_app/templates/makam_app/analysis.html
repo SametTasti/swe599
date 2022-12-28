@@ -1,15 +1,81 @@
 {% extends "base.html" %}
 
-{% block title %}
-Analiz
-{% endblock title %}
+{% load static %}
+
+{% block title %}Analiz{% endblock title %}
 
 {% block content %}
 
+<div class="container">
 
+    <div class="row">
+        <div class="col-4">
+            Test:
+        </div>
+        <div class="col-8">
+            <canvas width="400" height="400" id="pie-chart-1"></canvas>
+        </div>
+    </div>
+    <hr>
+    <br>
+
+</div>
 
 {% endblock content%}
 
 {% block scripts %}
+
+<script>
+
+    // arrayden verileri almak için aşağıdaki gibi string oluşturmak şart.
+
+    // my_all_data = '{{test_arr.0|escapejs}}'
+    // my_all_data2 = '{{test_arr.1.data1_json|escapejs}}'
+
+    all_piece = '{{pieces|escapejs}}'
+
+    pieces_clean = JSON.parse(all_piece)
+
+    console.log(pieces_clean[0]['bilesenler'][0]['bilesen_cesniler'])
+
+    // var pieChartData1 = '{{ data1_json|escapejs }}';
+    // var pieChartLabels1 = '{{ labels1_json|escapejs }}';
+
+    // var data1 = JSON.parse(pieChartData1);
+    // var labels1 = JSON.parse(pieChartLabels1);
+
+    // var ctx1 = document.getElementById('pie-chart-1').getContext('2d');
+
+    // var canvas1 = document.getElementById('pie-chart-1');
+
+    // var pieChart1 = new Chart(ctx1, {
+    //     type: 'pie',
+    //     data: {
+    //         labels: labels1,
+    //         datasets: [{
+    //             data: data1,
+    //             backgroundColor: [
+    //                 'rgba(255, 99, 132, 0.2)',
+    //                 'rgba(54, 162, 235, 0.2)',
+    //                 'rgba(255, 206, 86, 0.2)',
+    //                 'rgba(75, 192, 192, 0.2)',
+    //             ],
+    //             borderColor: [
+    //                 'rgba(255, 99, 132, 1)',
+    //                 'rgba(54, 162, 235, 1)',
+    //                 'rgba(255, 206, 86, 1)',
+    //                 'rgba(75, 192, 192, 1)',
+    //             ],
+    //             borderWidth: 1
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         maintainAspectRatio: false,
+    //         aspectRatio: 1,
+    //     }
+    // });
+
+</script>
 
 {% endblock scripts %}

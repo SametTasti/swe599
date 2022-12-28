@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.http import JsonResponse
 from .forms import PreliminaryDataEntryForm
 from .models import Makam, Usul, Piece
 import json
-import ast  # ajax ile gelen dictionary'i parse'lamak için
-from django.db.models import Q
+from django.templatetags.static import static
+
 
 # Create your views here.
 
@@ -118,7 +118,8 @@ def QueryResultsView(request):
 
                 my_piece = Piece.objects.get(pk=my_pk)
 
-                selected_pieces_for_analysis.append(my_piece)
+                if my_piece not in selected_pieces_for_analysis:
+                    selected_pieces_for_analysis.append(my_piece)
 
             return JsonResponse({
                 'success': True,
@@ -182,8 +183,6 @@ def QueryResultsView(request):
 
                 filter_dict[my_query_string] = my_input_value
 
-    print(filter_dict)
-
     pieces_found = all_pieces.filter(**filter_dict)
 
     pseudo_context.clear()
@@ -197,7 +196,7 @@ def QueryResultsView(request):
     return render(request, 'makam_app/query_results.html', context=context_dict)
 
 
-class AnalysisResult:
+class AnalyzedPiece:
 
     piece_name = ""
     analyzed_subcomponents = []
@@ -206,14 +205,16 @@ class AnalysisResult:
         self.piece_name = piece_name
         self.analyzed_subcomponents = analyzed_subcomponents
 
+
 class AnalyzedSubcomponent:
-    
+
     subcomponent_name = ""
     analyzed_cesnis_list = []
 
     def __init__(self, subcomponent_name, analyzed_cesnis_list):
         self.subcomponent_name = subcomponent_name
         self.analyzed_cesnis_list = analyzed_cesnis_list
+
 
 class AnalyzedCesni:
 
@@ -222,14 +223,26 @@ class AnalyzedCesni:
     cesnis_length_in_256 = 0.0
     percentage_in_usul = 0.0
 
-    def __init__(self, cesni_name, cesnis_usul, cesnis_length_in_256, percentage_in_usul ):
+    def __init__(self, cesni_name, cesnis_usul, cesnis_length_in_256, percentage_in_usul):
         self.cesni_name = cesni_name
         self.cesnis_usul = cesnis_usul
         self.cesnis_length_in_256 = cesnis_length_in_256
         self.percentage_in_usul = percentage_in_usul
 
 
+class AnalyzedByCommonSubcomponent:
+
+    subcomponent_name = ""
+    analyzed_cesnis_list = []
+
+    def __init__(self, subcomponent_name, analyzed_cesnis_list):
+        self.subcomponent_name = subcomponent_name
+        self.analyzed_cesnis_list = analyzed_cesnis_list
+
+
 def AnalysisView(request):
+
+    analyzed_piece_list = []
 
     for current_piece in selected_pieces_for_analysis:
 
@@ -257,7 +270,8 @@ def AnalysisView(request):
                         cesnis_usul_adet = int(usul['adet'])
                         cesnis_usul_olcu = int(usul['olcu'])
                         usul_scale_multiplier_256 = 256 / cesnis_usul_cesit
-                        cesnis_usul_length = cesnis_usul_adet * usul_scale_multiplier_256 * cesnis_usul_olcu
+                        cesnis_usul_length = cesnis_usul_adet * \
+                            usul_scale_multiplier_256 * cesnis_usul_olcu
                         # print(cesnis_usul_length)
 
                 cesni_toplam_length_in_256 = 0
@@ -266,36 +280,40 @@ def AnalysisView(request):
                     cesni_olcu_sayisi = cesni['olcu_sayisi']
                     cesni_olcu_to_256_length = 1
                     if cesnis_usul_cesit > 0:
-                        cesni_olcu_to_256_length = (256 / cesnis_usul_cesit) * float(cesni_olcu_sayisi) * cesnis_usul_adet
-                    
+                        cesni_olcu_to_256_length = (
+                            256 / cesnis_usul_cesit) * float(cesni_olcu_sayisi) * cesnis_usul_adet
+
                     cesni_toplam_length_in_256 += cesni_olcu_to_256_length
                     # print(cesni_olcu_to_256_length)
 
                 if cesni['dortluk_sayisi']:
                     cesni_dortluk_sayisi = cesni['dortluk_sayisi']
-                    cesni_dortluk_to_256_length = (256 / 4) * float(cesni_dortluk_sayisi)
+                    cesni_dortluk_to_256_length = (
+                        256 / 4) * float(cesni_dortluk_sayisi)
                     cesni_toplam_length_in_256 += cesni_dortluk_to_256_length
                     # print(cesni_dortluk_to_256_length)
 
                 if cesni['sekizlik_sayisi']:
                     cesni_sekizlik_sayisi = cesni['sekizlik_sayisi']
-                    cesni_sekizlik_to_256_length = (256 / 8) * float(cesni_sekizlik_sayisi)
+                    cesni_sekizlik_to_256_length = (
+                        256 / 8) * float(cesni_sekizlik_sayisi)
                     cesni_toplam_length_in_256 += cesni_sekizlik_to_256_length
                     # print(cesni_sekizlik_to_256_length)
-                
+
                 if cesni['onaltilik_sayisi']:
                     cesni_onaltilik_sayisi = cesni['onaltilik_sayisi']
-                    cesni_onaltilik_to_256_length = (256 / 16) * float(cesni_onaltilik_sayisi)
+                    cesni_onaltilik_to_256_length = (
+                        256 / 16) * float(cesni_onaltilik_sayisi)
                     cesni_toplam_length_in_256 += cesni_onaltilik_to_256_length
                     # print(cesni_onaltilik_to_256_length)
 
                 cesni_usul_percentage = 0
-
                 if cesnis_usul_length > 0:
-                    cesni_usul_percentage = (cesni_toplam_length_in_256 / cesnis_usul_length) * 100
+                    cesni_usul_percentage = (
+                        cesni_toplam_length_in_256 / cesnis_usul_length) * 100
+                analyzed_cesni = AnalyzedCesni(cesni_name=cesni_isim, cesnis_usul=cesnis_usul_isim,
+                                               cesnis_length_in_256=cesni_toplam_length_in_256, percentage_in_usul=cesni_usul_percentage)
 
-                analyzed_cesni = AnalyzedCesni(cesni_name=cesni_isim, cesnis_usul=cesnis_usul_isim, cesnis_length_in_256=cesni_toplam_length_in_256, percentage_in_usul=cesni_usul_percentage )
-                
                 my_analyzed_cesni_list.append(analyzed_cesni)
 
                 # print(analyzed_cesni.cesni_name)
@@ -303,17 +321,58 @@ def AnalysisView(request):
                 # print(analyzed_cesni.cesnis_length_in_256)
                 # print(analyzed_cesni.percentage_in_usul)
 
-            my_analyzed_subcomponent = AnalyzedSubcomponent(subcomponent_name=subcomponent['subcomponent_isim'], analyzed_cesnis_list=my_analyzed_cesni_list)
+            my_analyzed_subcomponent = AnalyzedSubcomponent(
+                subcomponent_name=subcomponent['subcomponent_isim'], analyzed_cesnis_list=my_analyzed_cesni_list)
 
             analyzed_subcomponent_list.append(my_analyzed_subcomponent)
 
+        my_analyzed_piece = AnalyzedPiece(
+            piece_name=current_piece.eser_adi, analyzed_subcomponents=analyzed_subcomponent_list)
 
+        analyzed_piece_list.append(my_analyzed_piece)
 
-        
+    # contexte yollamak için veriyi formatla
 
+    cleaned_piece_list = []
 
+    for my_piece in analyzed_piece_list:
 
+        analyzed_data_dict = {}
 
+        analyzed_data_dict['parca_ismi'] = my_piece.piece_name
 
+        analyzed_subcomponent_list = []
 
-    return render(request, 'makam_app/analysis.html')
+        for my_subcomponent in my_piece.analyzed_subcomponents:
+
+            print(my_subcomponent)
+
+            analyzed_subcomponent_dict = {}
+
+            analyzed_cesni_list = []
+
+            for my_cesni in my_subcomponent.analyzed_cesnis_list:
+
+                analyzed_cesni_data_dict = {}
+
+                analyzed_cesni_data_dict['cesni_ismi'] = my_cesni.cesni_name
+                analyzed_cesni_data_dict['cesni_usul'] = my_cesni.cesnis_usul
+                analyzed_cesni_data_dict['cesni_sure_256'] = my_cesni.cesnis_length_in_256
+                analyzed_cesni_data_dict['cesni_oran'] = my_cesni.percentage_in_usul
+
+                analyzed_cesni_list.append(analyzed_cesni_data_dict)
+
+            analyzed_subcomponent_dict['bilesen_ismi'] = my_subcomponent.subcomponent_name
+            analyzed_subcomponent_dict['bilesen_cesniler'] = analyzed_cesni_list
+
+            analyzed_subcomponent_list.append(analyzed_subcomponent_dict)
+
+        analyzed_data_dict['bilesenler'] = analyzed_subcomponent_list
+
+        cleaned_piece_list.append(analyzed_data_dict)
+
+    context = {
+        'pieces': json.dumps(cleaned_piece_list),
+    }
+
+    return render(request, 'makam_app/analysis.html', context=context)
