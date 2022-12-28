@@ -8,16 +8,22 @@
 
 <div class="container">
 
-    <div class="row">
-        <div class="col-4">
-            Test:
-        </div>
-        <div class="col-8">
-            <canvas width="400" height="400" id="pie-chart-1"></canvas>
-        </div>
-    </div>
-    <hr>
-    <br>
+    <ol>
+        <li>
+
+            <div class="row">
+                <div class="col-4">
+                    Test:
+                </div>
+                <div class="col-8">
+                    <canvas width="200" height="200" id="pie-chart-1"></canvas>
+                </div>
+            </div>
+            <hr>
+            <br>
+
+        </li>
+    </ol>
 
 </div>
 
@@ -27,54 +33,113 @@
 
 <script>
 
-    // arrayden verileri almak için aşağıdaki gibi string oluşturmak şart.
+    all_selected_pieces_data = '{{pieces|escapejs}}'
 
-    // my_all_data = '{{test_arr.0|escapejs}}'
-    // my_all_data2 = '{{test_arr.1.data1_json|escapejs}}'
+    pieces_cleaned_data = JSON.parse(all_selected_pieces_data)
 
-    all_piece = '{{pieces|escapejs}}'
+    for (my_piece of pieces_cleaned_data) {
 
-    pieces_clean = JSON.parse(all_piece)
+        cesni_name_percentage_list = [];
 
-    console.log(pieces_clean[0]['bilesenler'][0]['bilesen_cesniler'])
+        for (my_bilesen of my_piece['bilesenler']) {
 
-    // var pieChartData1 = '{{ data1_json|escapejs }}';
-    // var pieChartLabels1 = '{{ labels1_json|escapejs }}';
+            cesni_name_percentage_pair = {};
 
-    // var data1 = JSON.parse(pieChartData1);
-    // var labels1 = JSON.parse(pieChartLabels1);
+            for (my_cesni of my_bilesen['bilesen_cesniler']) {
 
-    // var ctx1 = document.getElementById('pie-chart-1').getContext('2d');
+                if (!(my_cesni['cesni_ismi'] in cesni_name_percentage_pair)) {
 
-    // var canvas1 = document.getElementById('pie-chart-1');
+                    cesni_name_percentage_pair[my_cesni['cesni_ismi']] = my_cesni['cesni_oran'];
+                }
+                else {
 
-    // var pieChart1 = new Chart(ctx1, {
-    //     type: 'pie',
-    //     data: {
-    //         labels: labels1,
-    //         datasets: [{
-    //             data: data1,
-    //             backgroundColor: [
-    //                 'rgba(255, 99, 132, 0.2)',
-    //                 'rgba(54, 162, 235, 0.2)',
-    //                 'rgba(255, 206, 86, 0.2)',
-    //                 'rgba(75, 192, 192, 0.2)',
-    //             ],
-    //             borderColor: [
-    //                 'rgba(255, 99, 132, 1)',
-    //                 'rgba(54, 162, 235, 1)',
-    //                 'rgba(255, 206, 86, 1)',
-    //                 'rgba(75, 192, 192, 1)',
-    //             ],
-    //             borderWidth: 1
-    //         }]
-    //     },
-    //     options: {
-    //         responsive: true,
-    //         maintainAspectRatio: false,
-    //         aspectRatio: 1,
-    //     }
-    // });
+                    cesni_name_percentage_pair[my_cesni['cesni_ismi']] += my_cesni['cesni_oran'];
+                }
+            }
+
+            cesni_name_percentage_list.push(cesni_name_percentage_pair);
+        }
+
+        createNewChartAddToHtml(my_piece, cesni_name_percentage_list)
+    }
+
+    function createNewChartAddToHtml(piece, cesnis) {
+
+        console.log(cesnis)
+
+        var my_canvas = document.createElement('canvas');
+        my_canvas.style.width = 150;
+        my_canvas.style.height = 150;
+
+        var data = []
+        var labels = []
+
+        var my_chart = new Chart(my_canvas, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    //data sayısı kadar renk üret!
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 1,
+            }
+        });
+
+    }
+
+
+
+    
+    var data1 = [10, 20, 30];
+    var labels1 = ['a', 'b', 'c'];
+
+    var ctx1 = document.getElementById('pie-chart-1'); //.getContext('2d');
+
+    var pieChart1 = new Chart(ctx1, {
+        type: 'pie',
+        data: {
+            labels: labels1,
+            datasets: [{
+                data: data1,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            aspectRatio: 1,
+        }
+    });
 
 </script>
 
