@@ -6,15 +6,20 @@
 
 {% block content %}
 
+<h2>Seçilen Parçalardaki Bütün Bileşenlerin Özeti:</h2>
 <div class="container">
-    <h2>Seçilen Parçalardaki Bütün Bileşenlerin Özeti:</h2>
     <div class="row">
-        <ol id="analyzed_subcomponent_list"></ol>
+        <ol id="analyzed_subcomponent_list">
+        </ol>
     </div>
-    <hr>
-    <br>
+</div>
+
+<br>
+<hr>
+<br>
+
+<div class="container">
     <h2>Parçaların Bileşenlerinin Analizleri:</h2>
-    <br>
     <div class="row">
         <ol id="analyzed_piece_list"></ol>
     </div>
@@ -232,22 +237,31 @@
     for (const b of b_list) {
 
         const modifiedCesniList = b._cesni_list.reduce((acc, curr) => {
+
             const { _name, _cesni_list } = curr;
+
             const modifiedCesniList = b._cesni_list.reduce((cesniAcc, cesni) => {
+
                 const { cesni_ismi } = cesni;
+
                 if (!cesniAcc[cesni_ismi]) {
+
                     cesniAcc[cesni_ismi] = {
                         cesni_ismi,
                         cesni_usul: cesni.cesni_usul,
                         cesni_sure_256: cesni.cesni_sure_256,
                         cesni_oran: cesni.cesni_oran
                     };
+
                 } else {
                     cesniAcc[cesni_ismi].cesni_sure_256 += cesni.cesni_sure_256;
                 }
                 return cesniAcc;
+
             }, {});
+
             return { ...acc, ...modifiedCesniList };
+
         }, {});
 
         const modifiedCesniListArray = Object.values(modifiedCesniList);
@@ -255,12 +269,78 @@
         b._cesni_list = modifiedCesniListArray;
     }
 
-    console.log(b_list);
+    // console.log(b_list);
 
-    function createNewChartForSubcomponentAddToHtml(piece, bilesenler, cesniler) {
+    function createNewChartForSubcomponentAddToHtml(subcomponent_list) {
 
+        my_subcomponent_list = document.getElementById("analyzed_subcomponent_list");
+
+        for (const s of subcomponent_list) {
+
+            data = [];
+            labels = [];
+
+            for (const cesni of s._cesni_list) {
+
+                data.push(cesni.cesni_sure_256);
+                labels.push(cesni.cesni_ismi);
+
+            }
+
+            current_li_name = String(s._name) + '_subcomponent';
+
+            subcomponent_list_item = document.createElement('li');
+            subcomponent_list_item.id = current_li_name;
+
+            my_subcomponent_list.appendChild(subcomponent_list_item);
+
+            my_subcomponent_node = document.getElementById(current_li_name);
+
+            current_chart_name = String(current_li_name + "_chart");
+
+            my_subcomponent_node.insertAdjacentHTML('beforeend', `
+
+                    <div class="row">
+                        <div class="col-4">
+                        <b>Bileşen:</b> ${s.name}
+                        <br>
+                        <b>Bileşen:</b> asdasdasdas
+                        <!-- buraya açıklama -->
+                        </div>
+                        <div class="col-8">
+                            <canvas width="200" height="200" id="${current_chart_name}"></canvas>
+                        </div>
+                    </div>
+                    <hr>
+                    <br>         
+            `);
+
+            my_subcomponent_canvas = document.getElementById(current_chart_name).getContext('2d');
+
+            colorArr = createColorArray(subcomponent_list.length)
+
+            let my_chart = new Chart(my_subcomponent_canvas, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colorArr,
+                        borderColor: colorArr,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    aspectRatio: 1,
+                }
+            });
+        }
 
     }
+
+    createNewChartForSubcomponentAddToHtml(b_list);
 
 </script>
 
