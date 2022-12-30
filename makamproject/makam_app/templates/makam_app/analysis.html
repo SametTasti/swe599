@@ -7,24 +7,17 @@
 {% block content %}
 
 <div class="container">
-
-    <ol>
-        <li>
-
-            <div class="row">
-                <div class="col-4">
-                    Test:
-                </div>
-                <div class="col-8">
-                    <canvas width="200" height="200" id="pie-chart-1"></canvas>
-                </div>
-            </div>
-            <hr>
-            <br>
-
-        </li>
-    </ol>
-
+    <h2>Seçilen Parçalardaki Bütün Bileşenlerin Özeti:</h2>
+    <div class="row">
+        <ol id="analyzed_subcomponent_list"></ol>
+    </div>
+    <hr>
+    <br>
+    <h2>Parçaların Bileşenlerinin Analizleri:</h2>
+    <br>
+    <div class="row">
+        <ol id="analyzed_piece_list"></ol>
+    </div>
 </div>
 
 {% endblock content%}
@@ -33,15 +26,18 @@
 
 <script>
 
-    all_selected_pieces_data = '{{pieces|escapejs}}'
+    all_selected_pieces_data = '{{pieces|escapejs}}';
 
-    pieces_cleaned_data = JSON.parse(all_selected_pieces_data)
+    pieces_cleaned_data = JSON.parse(all_selected_pieces_data);
 
     for (my_piece of pieces_cleaned_data) {
 
-        cesni_name_percentage_list = [];
+        let bilesen_name_list = [];
+        let cesni_name_percentage_list = [];
 
         for (my_bilesen of my_piece['bilesenler']) {
+
+            bilesen_name_list.push(my_bilesen['bilesen_ismi'])
 
             cesni_name_percentage_pair = {};
 
@@ -60,86 +56,211 @@
             cesni_name_percentage_list.push(cesni_name_percentage_pair);
         }
 
-        createNewChartAddToHtml(my_piece, cesni_name_percentage_list)
+        createNewChartAddToHtml(my_piece, bilesen_name_list, cesni_name_percentage_list)
     }
 
-    function createNewChartAddToHtml(piece, cesnis) {
+    function createNewChartAddToHtml(piece, bilesenler, cesniler) {
 
-        console.log(cesnis)
+        my_piece_list = document.getElementById("analyzed_piece_list");
 
-        var my_canvas = document.createElement('canvas');
-        my_canvas.style.width = 150;
-        my_canvas.style.height = 150;
+        current_li_name = String(piece['parca_ismi']);
+        piece_list_item = document.createElement('li');
+        piece_list_item.id = current_li_name;
+        my_piece_list.appendChild(piece_list_item);
 
-        var data = []
-        var labels = []
+        for (let current_cesni_index = 0; current_cesni_index < cesniler.length; ++current_cesni_index) {
 
-        var my_chart = new Chart(my_canvas, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    //data sayısı kadar renk üret!
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                aspectRatio: 1,
+            let data = [];
+            let labels = [];
+
+            for (key in cesniler[current_cesni_index]) {
+                data.push(cesniler[current_cesni_index][key])
             }
-        });
+
+            for (label in cesniler[current_cesni_index]) {
+                labels.push(label)
+            }
+
+            current_chart_li_name = String(piece['parca_ismi']) + "_" + current_cesni_index + "_" + bilesenler[current_cesni_index];
+            piece_chart_list = document.createElement('ul');
+            piece_chart_list.id = current_chart_li_name;
+            piece_list_item.appendChild(piece_chart_list);
+
+            my_piece_list_node = document.getElementById(current_chart_li_name);
+
+            current_chart_name = String(piece['parca_ismi'] + "_" + current_cesni_index + "_" + bilesenler[current_cesni_index] + "_" + 'piechart');
+
+            my_piece_list_node.insertAdjacentHTML('beforeend', `
+            
+            <li>
+                 <div class="row">
+                     <div class="col-4">
+                        <b>Parça:</b> ${piece['parca_ismi']}
+                        <br>
+                        <b>Bileşen:</b> ${bilesenler[current_cesni_index]}
+                        <!-- buraya açıklama -->
+                     </div>
+                     <div class="col-8">
+                         <canvas width="200" height="200" id="${current_chart_name}"></canvas>
+                     </div>
+                 </div>
+                 <hr>
+                 <br>
+             </li>
+
+            `);
+
+            var my_canvas = document.getElementById(current_chart_name).getContext('2d');
+
+            colorArr = createColorArray(data.length)
+
+            let my_chart = new Chart(my_canvas, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colorArr,
+                        borderColor: colorArr,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    aspectRatio: 1,
+                }
+            });
+        }
 
     }
 
+    function createColorArray(length) {
 
+        const colorArray = [];
 
-    
-    var data1 = [10, 20, 30];
-    var labels1 = ['a', 'b', 'c'];
+        for (let i = 0; i < length; i++) {
 
-    var ctx1 = document.getElementById('pie-chart-1'); //.getContext('2d');
+            let color;
+            do {
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                const a = 100;
+                // Math.random();
 
-    var pieChart1 = new Chart(ctx1, {
-        type: 'pie',
-        data: {
-            labels: labels1,
-            datasets: [{
-                data: data1,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            aspectRatio: 1,
+                color = `rgba(${r}, ${g}, ${b}, ${a})`;
+
+            } while (color === 'rgba(255, 255, 255, 100)');
+
+            colorArray.push(color);
         }
-    });
+
+        return colorArray;
+    }
+
+    // bileşenlerin analizi için:
+
+    class Bilesen {
+        constructor() {
+            this._name = "";
+            this._cesni_list = [];
+        }
+
+        set name(name) {
+            this._name = name;
+        }
+
+        get name() {
+            return this._name;
+        }
+
+        set cesni_list(cesni_list) {
+            this._cesni_list = cesni_list;
+        }
+
+        get cesni_list() {
+            return this._cesni_list;
+        }
+    }
+
+    const b_list = [];
+
+    for (const my_piece of pieces_cleaned_data) {
+
+        for (const my_bilesen of my_piece["bilesenler"]) {
+
+            const bilesen = new Bilesen();
+
+            bilesen.name = my_bilesen["bilesen_ismi"];
+
+            let bilesenExists = false;
+
+            for (const b of b_list) {
+
+                if (b.name === bilesen.name) {
+                    bilesenExists = true;
+                    break;
+                }
+
+            }
+
+            if (!bilesenExists) {
+                b_list.push(bilesen);
+            }
+        }
+    }
+
+    for (const b of b_list) {
+
+        for (const my_piece of pieces_cleaned_data) {
+
+            for (const my_bilesen of my_piece["bilesenler"]) {
+
+                if (b.name === my_bilesen['bilesen_ismi']) {
+                    for (const my_cesni of my_bilesen['bilesen_cesniler']) {
+                        b.cesni_list.push(my_cesni);
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    for (const b of b_list) {
+
+        const modifiedCesniList = b._cesni_list.reduce((acc, curr) => {
+            const { _name, _cesni_list } = curr;
+            const modifiedCesniList = b._cesni_list.reduce((cesniAcc, cesni) => {
+                const { cesni_ismi } = cesni;
+                if (!cesniAcc[cesni_ismi]) {
+                    cesniAcc[cesni_ismi] = {
+                        cesni_ismi,
+                        cesni_usul: cesni.cesni_usul,
+                        cesni_sure_256: cesni.cesni_sure_256,
+                        cesni_oran: cesni.cesni_oran
+                    };
+                } else {
+                    cesniAcc[cesni_ismi].cesni_sure_256 += cesni.cesni_sure_256;
+                }
+                return cesniAcc;
+            }, {});
+            return { ...acc, ...modifiedCesniList };
+        }, {});
+
+        const modifiedCesniListArray = Object.values(modifiedCesniList);
+
+        b._cesni_list = modifiedCesniListArray;
+    }
+
+    console.log(b_list);
+
+    function createNewChartForSubcomponentAddToHtml(piece, bilesenler, cesniler) {
+
+
+    }
 
 </script>
 

@@ -345,8 +345,6 @@ def AnalysisView(request):
 
         for my_subcomponent in my_piece.analyzed_subcomponents:
 
-            print(my_subcomponent)
-
             analyzed_subcomponent_dict = {}
 
             analyzed_cesni_list = []
