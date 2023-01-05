@@ -152,7 +152,6 @@
                 const g = Math.floor(Math.random() * 256);
                 const b = Math.floor(Math.random() * 256);
                 const a = 100;
-                // Math.random();
 
                 color = `rgba(${r}, ${g}, ${b}, ${a})`;
 
@@ -163,8 +162,6 @@
 
         return colorArray;
     }
-
-    // bileşenlerin analizi için:
 
     class Bilesen {
         constructor() {
@@ -269,8 +266,6 @@
         b._cesni_list = modifiedCesniListArray;
     }
 
-    // console.log(b_list);
-
     function createNewChartForSubcomponentAddToHtml(subcomponent_list) {
 
         my_subcomponent_list = document.getElementById("analyzed_subcomponent_list");
@@ -287,6 +282,8 @@
 
             }
 
+            my_percentage_data = toPercentages(data);
+
             current_li_name = String(s._name) + '_subcomponent';
 
             subcomponent_list_item = document.createElement('li');
@@ -298,14 +295,15 @@
 
             current_chart_name = String(current_li_name + "_chart");
 
+            console.log(s);
+
             my_subcomponent_node.insertAdjacentHTML('beforeend', `
 
                     <div class="row">
                         <div class="col-4">
                         <b>Bileşen:</b> ${s.name}
-                        <br>
-                        <b>Bileşen:</b> asdasdasdas
-                        <!-- buraya açıklama -->
+                        <ul id="${s.name}_list"></ul>
+                        <br>                        
                         </div>
                         <div class="col-8">
                             <canvas width="200" height="200" id="${current_chart_name}"></canvas>
@@ -314,6 +312,15 @@
                     <hr>
                     <br>         
             `);
+
+            my_cesni_list = document.getElementById(s.name + '_list');
+
+            for (cesni of s._cesni_list) {
+            
+                let my_cesni_item = document.createElement('li');
+                my_cesni_item.innerHTML = cesni.cesni_ismi + ' : '+ cesni.cesni_sure_256;
+                my_cesni_list.appendChild(my_cesni_item);
+            }
 
             my_subcomponent_canvas = document.getElementById(current_chart_name).getContext('2d');
 
@@ -324,7 +331,7 @@
                 data: {
                     labels: labels,
                     datasets: [{
-                        data: data,
+                        data: my_percentage_data,
                         backgroundColor: colorArr,
                         borderColor: colorArr,
                         borderWidth: 1
@@ -339,6 +346,14 @@
         }
 
     }
+
+    function toPercentages(arr) {
+        const total = arr.reduce((a, b) => a + b, 0);
+        const percentages = arr.map(x => (x / total) * 100);
+        return percentages;
+    }
+
+
 
     createNewChartForSubcomponentAddToHtml(b_list);
 

@@ -12,7 +12,7 @@ Arama Sonuçları
 
         <div class="row">
 
-            <div class="col-8">
+            <div class="col-7">
 
                 <h3>Sonuçlardan Seç:</h3>
 
@@ -29,40 +29,40 @@ Arama Sonuçları
                                 <div class="row">
 
                                     <div class="col-6">
-                                        Eser Adı: {{pieces.eser_adi}}
+                                        <b><i>Eser Adı:</i></b> <p id="{{pieces.pk}}_piecename">{{pieces.eser_adi}}</p>
                                         <br>
-                                        Bestekar: {{pieces.bestekar}}
+                                        <b><i>Bestekar:</i></b> <p id="{{pieces.pk}}_pieceauthor">{{pieces.bestekar}}</p>
                                     </div>
-                                    
+
                                     <div class="col-6">
                                         {% for subcomponent in pieces.subcomponents %}
 
-                                            Bileşen İsmi: {{subcomponent.subcomponent_isim}}
-                                            <br>
+                                        <b><i>Bileşen İsmi:</i></b> {{subcomponent.subcomponent_isim}}
+                                        <br>
 
-                                            <hr>
+                                        <hr>
 
-                                            {% for key, value in subcomponent.items %}
+                                        {% for key, value in subcomponent.items %}
 
-                                                {% if key == 'cesni' %}
+                                        {% if key == 'cesni' %}
 
-                                                    {% for cesni_element in value %}
+                                        {% for cesni_element in value %}
 
-                                                        {% for cesni_property_name, cesni_property_value in cesni_element.items %}
+                                        {% for cesni_property_name, cesni_property_value in cesni_element.items %}
 
-                                                            {{cesni_property_name}} : {{cesni_property_value}}
-                                                            <br>
+                                        <b>{{cesni_property_name}}</b> : {{cesni_property_value}}
+                                        <br>
 
-                                                        {% endfor %}
+                                        {% endfor %}
 
-                                                        <hr>
-                                                    {% endfor %}
+                                        <hr>
+                                        {% endfor %}
 
-                                                {% endif %}
+                                        {% endif %}
 
-                                            {% endfor %}
+                                        {% endfor %}
 
-                                    {% endfor %}
+                                        {% endfor %}
                                     </div>
 
                                 </div>
@@ -90,8 +90,8 @@ Arama Sonuçları
                 </ul>
 
             </div>
-            <div class="col-4">
-
+            <div class="col-5">
+                <h3>Seçilenler:</h3>
                 <ul id="my_selected_pieces_list"></ul>
 
             </div>
@@ -107,6 +107,7 @@ Arama Sonuçları
 {% endblock content %}
 
 {% block scripts %}
+
 <script type="text/javascript">
 
     var selected_piece_pks = [];
@@ -121,6 +122,20 @@ Arama Sonuçları
             selected_piece_pks.push(selected_piece_id);
 
             elem.parentNode.parentNode.style.backgroundColor = '#ccffcc';
+
+            let new_li = document.createElement('li');
+            new_li.id = selected_piece_id + '_selected_item';
+
+            selected_piece_list.appendChild(new_li);
+            
+            piece_name = document.getElementById(selected_piece_id + '_piecename').innerHTML;
+            author_name = document.getElementById(selected_piece_id + '_pieceauthor').innerHTML;
+
+            new_li_node = document.getElementById(new_li.id);
+            new_li_node.insertAdjacentHTML('beforeend', `
+            ${piece_name}, ${author_name}
+            `);
+
         }
 
         console.log(selected_piece_pks)
@@ -130,15 +145,23 @@ Arama Sonuçları
 
         let selected_piece_id = elem.parentNode.parentNode.parentNode.id;
 
-        if (selected_piece_pks.includes(selected_piece_id)) {
+        let index = selected_piece_pks.indexOf(selected_piece_id);
 
-            selected_piece_pks.pop(selected_piece_id);
+        if (index > -1) {
+
+            my_selected_item = document.getElementById(selected_piece_id + '_selected_item');
+
+            selected_piece_list.removeChild(my_selected_item);
+
+            selected_piece_pks.splice(index, 1);
 
             elem.parentNode.parentNode.style.backgroundColor = 'white';
         }
 
-        console.log(selected_piece_pks)
+        console.log(selected_piece_pks);
     }
+
+
 
     $('#submit_all').click(function (event) {
 

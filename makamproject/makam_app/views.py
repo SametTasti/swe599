@@ -7,8 +7,6 @@ import json
 from django.templatetags.static import static
 
 
-# Create your views here.
-
 pseudo_context = {}
 selected_pieces_for_analysis = []
 
