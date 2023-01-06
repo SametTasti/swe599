@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from django.contrib.auth.models import User
 
 
 class Makam(models.Model):
@@ -28,3 +29,12 @@ class Piece(models.Model):
     usul = models.JSONField()
     form = models.CharField(max_length=127)
     subcomponents = models.JSONField()
+
+    def __str__(self):
+        return f"{self.pk} - {self.eser_adi}"
+
+
+class PieceInstance(models.Model):
+
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    created_date = models.DateField(null=True, blank=True)

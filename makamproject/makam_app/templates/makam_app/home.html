@@ -1,22 +1,35 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block title %}
-Makam Home
+Anasayfa
 {% endblock title %}
 
 {% block content %}
 
-<h1>Makam Home</h1>
+<div class="container">
 
-{% if user.is_authenticated %}
+    <div class="row">
 
-<p>Giriş yaptınız.</p>
-<p>Kullanıcı: {{user.get_username}}</p>
+        <h1>Anasayfa</h1>
 
-{% else %}
+        <div class="col-6">
 
-<p>Sistemi kullanabilmek için lütfen giriş yapın.</p>
+            {% if user.is_authenticated %}
+            <h5>Hoşgeldin, {{user.get_username}}</h5>         
+            {% else %}
+            <p>Sistemi kullanabilmek için lütfen giriş yapın.</p>
+            {% endif %}
 
-{% endif %}
+        </div>
+
+        <div class="col-6">
+            <img src="{% static 'itu_logo.jpg' %}" style="width: 75%;" alt="itu_logo">
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock content %}

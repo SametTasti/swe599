@@ -9,4 +9,5 @@ urlpatterns = [
     path('find_piece/', views.FindPieceView, name='FindPieceView'),
     path('query_results/', views.QueryResultsView, name='QueryResultsView'),
     path('analysis/', views.AnalysisView, name='AnalysisView'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
 ]

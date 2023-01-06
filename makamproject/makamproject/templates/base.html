@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  {% load static %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Makam</title>
@@ -12,30 +13,47 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'makam_app:HomeView' %}">Makam Home</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          {% if user.is_authenticated %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'makam_app:CreatePieceView' %}">Parça Ekle</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'makam_app:FindPieceView' %}">Parça Ara</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}?next={{request.path}}">Çıkış Yap</a>
-          </li>
-          {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}?next={{request.path}}">Giriş Yap</a>
-          </li>
-          {% endif %}
-        </ul>
+
+      
+      <div class="col-1">
+        <img src="{% static 'itu_logo.jpg' %}" style="width: 30%;" alt="itu_logo">
       </div>
+
+      <div class="col-1">
+        <a class="navbar-brand" href="{% url 'makam_app:HomeView' %}">Anasayfa</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="col-10">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'makam_app:CreatePieceView' %}">Parça Ekle</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'makam_app:FindPieceView' %}">Parça Ara</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}?next={{request.path}}">Çıkış Yap</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}?next={{request.path}}">Giriş Yap</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'makam_app:signup' %}">Kaydol</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+
+
+
+      </div>
+
   </nav>
   </div>
 

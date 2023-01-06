@@ -3,10 +3,13 @@ from django.urls import reverse
 from django.http import JsonResponse
 from .forms import PreliminaryDataEntryForm
 from .models import Makam, Usul, Piece
-import json
 from django.templatetags.static import static
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.views.generic import CreateView, DetailView, ListView
+from django.urls import reverse_lazy
 
+import json
 
 pseudo_context = {}
 selected_pieces_for_analysis = []
@@ -14,6 +17,12 @@ selected_pieces_for_analysis = []
 
 def HomeView(request):
     return render(request, 'makam_app/home.html')
+
+
+class SignUpView(CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'makam_app/signup.html'
 
 
 @login_required

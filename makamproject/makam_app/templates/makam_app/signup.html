@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}
+Kayıt Sayfası
+{% endblock title %}
+
+{% block content %}
+<style>
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    input[type="submit"] {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #0069d9;
+        border-color: #0062cc;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+        <h2>Sisteme Kaydol:</h2>
+        <div class="col-6">
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        {{ field.label_tag }}
+                        {{ field }}
+                        {% if field.errors %}
+                        {% for error in field.errors %}
+                        <p class="text-danger">{{ error }}</p>
+                        {% endfor %}
+                        {% endif %}
+                        {% if field.help_text %}
+                        <br>
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                    </div>
+                   
+                </div>
+                {% endfor %}
+                <input type="submit" class="col-sm-10" value="Kaydol">
+            </form>
+
+        </div>
+
+        <div class="col-6">
+            <img src="{% static 'itu_logo.jpg' %}" style="width: 75%;" alt="itu_logo">
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock content %}
