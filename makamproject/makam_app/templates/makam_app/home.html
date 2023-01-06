@@ -7,8 +7,16 @@ Makam Home
 {% block content %}
 
 <h1>Makam Home</h1>
-<p>
-    
-</p>
+
+{% if user.is_authenticated %}
+
+<p>Giriş yaptınız.</p>
+<p>Kullanıcı: {{user.get_username}}</p>
+
+{% else %}
+
+<p>Sistemi kullanabilmek için lütfen giriş yapın.</p>
+
+{% endif %}
 
 {% endblock content %}

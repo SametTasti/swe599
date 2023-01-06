@@ -5,6 +5,7 @@ from .forms import PreliminaryDataEntryForm
 from .models import Makam, Usul, Piece
 import json
 from django.templatetags.static import static
+from django.contrib.auth.decorators import login_required
 
 
 pseudo_context = {}
@@ -15,6 +16,7 @@ def HomeView(request):
     return render(request, 'makam_app/home.html')
 
 
+@login_required
 def CreatePieceView(request):
 
     if request.method == 'POST':
@@ -52,6 +54,7 @@ def CreatePieceView(request):
         return render(request, 'makam_app/create_piece.html', context=context_dict)
 
 
+@login_required
 def FindPieceView(request):
 
     if request.method == 'POST':
@@ -101,6 +104,7 @@ def FindPieceView(request):
         return render(request, 'makam_app/find_piece.html', context=context_dict)
 
 
+@login_required
 def QueryResultsView(request):
 
     if request.method == 'POST':
@@ -238,6 +242,7 @@ class AnalyzedByCommonSubcomponent:
         self.analyzed_cesnis_list = analyzed_cesnis_list
 
 
+@login_required
 def AnalysisView(request):
 
     analyzed_piece_list = []

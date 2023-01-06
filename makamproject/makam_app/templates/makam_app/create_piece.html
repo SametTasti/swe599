@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load widget_tweaks %}
+
 {% block title %}
 Parça Ekle
 {% endblock title %}
@@ -9,11 +11,32 @@ Parça Ekle
 <div class="container">
     <form class="form-group" enctype="multipart/form-data" method="post" id="my_data_form">
         <h1>Parça Ekle:</h1>
-        <br>
-
         {% csrf_token %}
-        {{preliminary_data_entry_form.as_p}}
+        {% for field in preliminary_data_entry_form %}
+        <div class="form-row">
+            <div class="form-group col-md-6" style="margin-top: 5px;">
 
+                {% if field.label == "Eser adi" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Eserin Adını Giriniz:</b></label>
+                {% elif field.label == "Bestekar" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Eserin Bestekârını Giriniz:</b></label>
+                {% elif field.label == "Yuzyil" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Eserin Yüzyılını Giriniz:</b></label>
+                {% elif field.label == "Gufte yazari" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Eserin Güfte Yazarını Giriniz:</b></label>
+                {% elif field.label == "Gufte vezin" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Güftenin Veznini Seçiniz:</b></label>
+                {% elif field.label == "Gufte nzmbcm" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Güftenin Nazım Biçimini Seçiniz:</b></label>
+                {% elif field.label == "Gufte nzmtur" %}
+                <label class="form-label" for="{{ field.id_for_label }}"><b>Güftenin Nazım Türünü Seçiniz:</b></label>
+                {% endif %}
+                {{ field|add_class:"form-control" }}
+
+
+            </div>
+        </div>
+        {% endfor %}
         <hr>
 
         <br>
