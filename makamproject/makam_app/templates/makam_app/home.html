@@ -17,7 +17,7 @@ Anasayfa
         <div class="col-6">
 
             {% if user.is_authenticated %}
-            <h5>Hoşgeldin, {{user.get_username}}</h5>         
+            <h5>Hoşgeldin, {{user.get_username}}!</h5>         
             {% else %}
             <p>Sistemi kullanabilmek için lütfen giriş yapın.</p>
             {% endif %}
@@ -25,7 +25,7 @@ Anasayfa
         </div>
 
         <div class="col-6">
-            <img src="{% static 'itu_logo.jpg' %}" style="width: 75%;" alt="itu_logo">
+            <img src="{% static 'itu_logo.jpg' %}" style="width: 75%; margin: 0 auto; display: block; opacity: 0.5;" alt="itu_logo">
         </div>
 
     </div>

@@ -66,8 +66,9 @@
 <div class="container">
 
     <div class="row">
-        <h2>Sisteme Giriş Yap:</h2>
+        
         <div class="col-6">
+            <h2>Sisteme Giriş Yap:</h2>
             <form method='post' action="{% url 'login' %}" class="form-horizontal">
                 {% csrf_token %}
                 <div class="form-group">
@@ -101,7 +102,7 @@
             </form>
         </div>
         <div class="col-6">
-            <img src="{% static 'itu_logo.jpg' %}" style="width: 75%;" alt="itu_logo">
+            <img src="{% static 'itu_logo.jpg' %}" style="width: 75%; margin: 0 auto; display: block; opacity: 0.15;" alt="itu_logo">
         </div>
 
     </div>

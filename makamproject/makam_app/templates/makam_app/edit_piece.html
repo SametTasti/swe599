@@ -3,14 +3,14 @@
 {% load widget_tweaks %}
 
 {% block title %}
-Parça Ara
+Parça Düzenle
 {% endblock title %}
 
 {% block content %}
 
 <div class="container">
     <form class="form-group" enctype="multipart/form-data" method="post" id="my_data_form">
-        <h1>Parça Ara:</h1>
+        <h1>Parça Düzenle:</h1>
         {% csrf_token %}
         {% for field in preliminary_data_entry_form %}
         <div class="form-row">
@@ -37,7 +37,6 @@ Parça Ara
             </div>
         </div>
         {% endfor %}
-
         <hr>
 
         <br>
@@ -230,7 +229,8 @@ Parça Ara
 
         <hr>
 
-        <input class="btn btn-danger" type="submit" value="Analiz Et" style="margin-bottom: 1%;" id="submit_all">
+        <input class="btn btn-danger" type="submit" value="Parçayı Kaydet" style="margin-bottom: 1%;" id="submit_all">
+
     </form>
 </div>
 
@@ -828,9 +828,20 @@ Parça Ara
         return subcomponent_array;
     }
 
-
-
     //--------------------------------------------------- FORM KISMI ------------------------------------------------------
+    //---------------------------------------------------ENJEKSİYON KISMI--------------------------------------------------
+
+    edit_piece_eser_adi = "{{piece_to_be_edited.eser_adi}}";
+    
+
+    if(edit_piece_eser_adi){
+
+    }
+
+
+    document.getElementById("id_eser_adi").innerText = "asdsadds";
+
+    //---------------------------------------------------ENJEKSİYON KISMI--------------------------------------------------
 
     $('#submit_all').click(function (event) {
 
@@ -842,11 +853,12 @@ Parça Ara
 
         $.ajax({
             type: 'POST',
-            url: "{% url 'makam_app:FindPieceView' %}",
+            url: "{% url 'makam_app:EditPieceView' pk=piece_to_be_edited.pk %}",
             dataType: 'json',
             data: $('form#my_data_form').serialize() + '&selected_makams=' + JSON.stringify(selected_makams) + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_form=' + JSON.stringify(form_name) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
 
             success: function (data) {
+                alert("Yeni parça başarıyla oluşturuldu.");
                 window.location.href = data.url;
             },
             error: function (data) {

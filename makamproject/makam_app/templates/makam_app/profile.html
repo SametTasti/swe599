@@ -1,8 +1,35 @@
-<h1>Welcome to the profile!</h1>
-<h2>Here are the books:</h2>
+{% extends "base.html" %}
 
-{% for book in bookinstance_list %}
-    
-    <p>{{book}}</p>
+{% load static %}
 
-{% endfor %}
+{% block title %}
+Profil
+{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Oluşturduğunuz Parçalar:</h1>
+
+    <ul>
+
+        {% for piece in piece_list %}
+        <li>
+            <div class="row">
+
+                <div class="col-6">{{piece}}</div>
+                <div class="col-6"><a href="{% url 'makam_app:EditPieceView' pk=piece.pk %}" class="btn btn-primary">Edit</a></div>
+
+            </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+</div>
+
+
+
+
+
+
+{% endblock content %}

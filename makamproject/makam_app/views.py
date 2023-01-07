@@ -4,11 +4,14 @@ from django.http import JsonResponse
 from .forms import PreliminaryDataEntryForm
 from .models import Makam, Usul, Piece
 from django.templatetags.static import static
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView, DetailView, ListView
 from django.urls import reverse_lazy
-
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+import datetime
 import json
 
 pseudo_context = {}
@@ -16,6 +19,7 @@ selected_pieces_for_analysis = []
 
 
 def HomeView(request):
+
     return render(request, 'makam_app/home.html')
 
 
@@ -23,6 +27,15 @@ class SignUpView(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'makam_app/signup.html'
+
+
+class UserPieceView(LoginRequiredMixin, ListView):
+    model = Piece
+    template_name = 'makam_app/profile.html'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return Piece.objects.filter(creator=self.request.user).all()
 
 
 @login_required
@@ -43,6 +56,8 @@ def CreatePieceView(request):
             form=json.loads(request.POST.get('selected_form')),
             subcomponents=json.loads(
                 request.POST.get('selected_subcomponents')),
+            creator=request.user,
+            created_date=datetime.date.today(),
         )
 
         newPiece.save()
@@ -61,6 +76,32 @@ def CreatePieceView(request):
             'usl_json': json.dumps(list(Usul.objects.values())),
         }
         return render(request, 'makam_app/create_piece.html', context=context_dict)
+
+
+@login_required
+def EditPieceView(request, pk):
+
+    if request.method == 'POST':
+        
+        return JsonResponse({
+            'success': True,
+            'url': reverse("makam_app:profile"),
+        })
+
+    else:
+
+        piece_to_be_edited = get_object_or_404(Piece, pk=pk)
+
+        preliminary_data_entry_form = PreliminaryDataEntryForm()
+
+        context_dict = {
+            "piece_to_be_edited": piece_to_be_edited,
+            'preliminary_data_entry_form': preliminary_data_entry_form,
+            'mkm_json': json.dumps(list(Makam.objects.values())),
+            'usl_json': json.dumps(list(Usul.objects.values())),
+        }
+
+        return render(request, 'makam_app/edit_piece.html', context=context_dict)
 
 
 @login_required

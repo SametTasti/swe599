@@ -10,4 +10,6 @@ urlpatterns = [
     path('query_results/', views.QueryResultsView, name='QueryResultsView'),
     path('analysis/', views.AnalysisView, name='AnalysisView'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('profile/', views.UserPieceView.as_view(), name='profile'),
+    path('edit/<int:pk>', views.EditPieceView, name='EditPieceView'),
 ]
