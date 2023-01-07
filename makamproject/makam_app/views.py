@@ -81,27 +81,68 @@ def CreatePieceView(request):
 @login_required
 def EditPieceView(request, pk):
 
+    piece_to_be_edited = get_object_or_404(Piece, pk=pk)
+
     if request.method == 'POST':
-        
+
+        eser_adi = request.POST.get('eser_adi')
+        bestekar = request.POST.get('bestekar')
+        yuzyil = request.POST.get('yuzyil')
+        gufte_yazari = request.POST.get('gufte_yazari')
+        gufte_vezin = request.POST.get('gufte_vezin')
+        gufte_nazim_bicim = request.POST.get('gufte_nzmbcm')
+        gufte_nazim_tur = request.POST.get('gufte_nzmtur')
+        makam = json.loads(request.POST.get('selected_makams'))
+        usul = json.loads(request.POST.get('selected_usuls'))
+        form = json.loads(request.POST.get('selected_form'))
+        subcomponents = json.loads(request.POST.get('selected_subcomponents'))
+
+        print(piece_to_be_edited)
+        print(eser_adi,bestekar, yuzyil, gufte_yazari, gufte_vezin, gufte_nazim_bicim, gufte_nazim_tur, makam, usul, form, subcomponents)
+
         return JsonResponse({
             'success': True,
             'url': reverse("makam_app:profile"),
         })
 
     else:
-
-        piece_to_be_edited = get_object_or_404(Piece, pk=pk)
-
         preliminary_data_entry_form = PreliminaryDataEntryForm()
 
-        context_dict = {
-            "piece_to_be_edited": piece_to_be_edited,
-            'preliminary_data_entry_form': preliminary_data_entry_form,
-            'mkm_json': json.dumps(list(Makam.objects.values())),
-            'usl_json': json.dumps(list(Usul.objects.values())),
-        }
+        edit_piece_eser_adi = piece_to_be_edited.eser_adi
+        edit_piece_bestekar = piece_to_be_edited.bestekar
+        edit_piece_yuzyil = piece_to_be_edited.yuzyil
+        edit_piece_gufte_yazari = piece_to_be_edited.gufte_yazari
+        edit_piece_gufte_vezin = piece_to_be_edited.gufte_vezin
+        edit_piece_gufte_nazim_bicim = piece_to_be_edited.gufte_nazim_bicim
+        edit_piece_gufte_nazim_tur = piece_to_be_edited.gufte_nazim_tur
+        edit_piece_makam = json.dumps(piece_to_be_edited.makam)
+        edit_piece_usul = json.dumps(piece_to_be_edited.usul)
+        edit_piece_form = piece_to_be_edited.form
+        edit_piece_subcomponents = json.dumps(piece_to_be_edited.subcomponents)
+        edit_piece_creator = piece_to_be_edited.creator
+        edit_piece_created_date = piece_to_be_edited.created_date
 
-        return render(request, 'makam_app/edit_piece.html', context=context_dict)
+    context_dict = {
+        'preliminary_data_entry_form': preliminary_data_entry_form,
+        'piece_to_be_edited':piece_to_be_edited,
+        'edit_piece_eser_adi': edit_piece_eser_adi,
+        'edit_piece_bestekar': edit_piece_bestekar,
+        'edit_piece_yuzyil': edit_piece_yuzyil,
+        'edit_piece_gufte_yazari': edit_piece_gufte_yazari,
+        'edit_piece_gufte_vezin': edit_piece_gufte_vezin,
+        'edit_piece_gufte_nazim_bicim': edit_piece_gufte_nazim_bicim,
+        'edit_piece_gufte_nazim_tur': edit_piece_gufte_nazim_tur,
+        'edit_piece_makam': edit_piece_makam,
+        'edit_piece_usul': edit_piece_usul,
+        'edit_piece_form': edit_piece_form,
+        'edit_piece_subcomponents': edit_piece_subcomponents,
+        'edit_piece_creator': edit_piece_creator,
+        'edit_piece_created_date': edit_piece_created_date,
+        'mkm_json': json.dumps(list(Makam.objects.values())),
+        'usl_json': json.dumps(list(Usul.objects.values())),
+    }
+
+    return render(request, 'makam_app/edit_piece.html', context=context_dict)
 
 
 @login_required
@@ -135,8 +176,6 @@ def FindPieceView(request):
         pseudo_context['subcomponents'] = subcomponents
 
         # burada yukarıdaki verilere göre json query yap, gelenleri context ile queryresult'a yolla
-
-        # return render(request, 'makam_app/query_results.html', context={'asdas':'asdasdas'})
 
         return JsonResponse({
             'success': True,

@@ -483,8 +483,6 @@ Parça Düzenle
                 .querySelector('#' + added_usuls[i].id + '_olcu_sayisi')
                 .querySelector('#' + added_usuls[i].id + '_input_olcu_sayisi');
 
-
-
             let val_str = String(added_usuls[i].id).toLowerCase();
 
             val_str = val_str.replace(/\s/g, '_');
@@ -831,15 +829,348 @@ Parça Düzenle
     //--------------------------------------------------- FORM KISMI ------------------------------------------------------
     //---------------------------------------------------ENJEKSİYON KISMI--------------------------------------------------
 
-    edit_piece_eser_adi = "{{piece_to_be_edited.eser_adi}}";
-    
+    edit_piece_eser_adi = "{{edit_piece_eser_adi}}";
+    edit_piece_bestekar = "{{edit_piece_bestekar}}";
+    edit_piece_yuzyil = "{{edit_piece_yuzyil}}";
+    edit_piece_gufte_yazari = "{{edit_piece_gufte_yazari}}";
+    edit_piece_gufte_vezin = "{{edit_piece_gufte_vezin}}";
+    edit_piece_gufte_nazim_bicim = "{{edit_piece_gufte_nazim_bicim}}";
+    edit_piece_gufte_nazim_tur = "{{edit_piece_gufte_nazim_tur}}";
 
-    if(edit_piece_eser_adi){
+    edit_piece_makam = "{{edit_piece_makam}}";
+    edit_piece_makam = JSON.parse(edit_piece_makam.replace(/&quot;/g, '"'));;
 
+    edit_piece_usul = "{{edit_piece_usul}}";
+    edit_piece_usul = JSON.parse(edit_piece_usul.replace(/&quot;/g, '"'));
+
+    edit_piece_form = "{{edit_piece_form}}";
+
+    edit_piece_subcomponents = "{{edit_piece_subcomponents}}";
+    edit_piece_subcomponents = JSON.parse(edit_piece_subcomponents.replace(/&quot;/g, '"'));
+
+    edit_piece_creator = "{{edit_piece_creator}}";
+    edit_piece_created_date = "{{edit_piece_created_date}}";
+
+    // console.log(edit_piece_eser_adi);
+    // console.log(edit_piece_bestekar);
+    // console.log(edit_piece_yuzyil);
+    // console.log(edit_piece_gufte_yazari);
+    // console.log(edit_piece_gufte_vezin);
+    // console.log(edit_piece_gufte_nazim_bicim);
+    // console.log(edit_piece_gufte_nazim_tur);
+    // console.log(edit_piece_makam);
+    // console.log(edit_piece_usul);
+    // console.log(edit_piece_form);
+    // console.log(edit_piece_subcomponents);
+    // console.log(edit_piece_creator);
+    // console.log(edit_piece_created_date);
+
+    if (edit_piece_eser_adi) {
+        document.getElementById("id_eser_adi").value = String(edit_piece_eser_adi);
     }
 
+    if (edit_piece_bestekar) {
+        document.getElementById("id_bestekar").value = String(edit_piece_bestekar);
+    }
 
-    document.getElementById("id_eser_adi").innerText = "asdsadds";
+    if (edit_piece_yuzyil) {
+        document.getElementById("id_yuzyil").value = String(edit_piece_yuzyil);
+    }
+
+    if (edit_piece_gufte_yazari) {
+        document.getElementById("id_gufte_yazari").value = String(edit_piece_gufte_yazari);
+    }
+
+    if (edit_piece_gufte_vezin) {
+        document.getElementById("id_gufte_vezin").querySelector("option[value='" + edit_piece_gufte_vezin + "\']").selected = true;
+    }
+
+    if (edit_piece_gufte_nazim_bicim) {
+        document.getElementById("id_gufte_nzmbcm").querySelector("option[value='" + edit_piece_gufte_nazim_bicim + "\']").selected = true;
+    }
+
+    if (edit_piece_gufte_nazim_tur) {
+        document.getElementById("id_gufte_nzmtur").querySelector("option[value='" + edit_piece_gufte_nazim_tur + "\']").selected = true;
+    }
+
+    if (edit_piece_makam.length != 0) {
+
+        selected_makam_list = document.getElementById("selected_makam_list");
+
+        for (const makam of edit_piece_makam) {
+
+            selected_makams.push(makam);
+
+            selected_makam_list.innerHTML +=
+                `
+            <li id="${makam}">
+                <div class="row">
+                    <div class="col-11">
+                        ${makam}
+                    </div>
+                    <div class="col-1">
+                        <button type="button" onclick="removeMakamFromList(this)" class="btn btn-primary"><b>X</b></button>
+                    </div>
+                </div>
+            </li>
+            `
+        }
+    }
+
+    if (edit_piece_usul.length != 0) {
+
+        for (const usul of edit_piece_usul) {
+
+            console.log(usul);
+
+            targetNode.insertAdjacentHTML('beforeend', `
+            <li id="${usul.isim}">
+                <div class="row">
+                    <div class="col-3">
+                        ${usul.isim}
+                    </div>
+                    <div id="${usul.isim}_mertebe_adet" class="col-2">Adet: 
+                        <select id="${usul.isim}_select_mertebe_adet"><option value="" hidden="selected">Adet</option><option value="2" class="form-select">2</option><option value="3" class="form-select">3</option><option value="4" class="form-select">4</option><option value="5" class="form-select">5</option><option value="6" class="form-select">6</option><option value="7" class="form-select">7</option><option value="8" class="form-select">8</option><option value="9" class="form-select">9</option><option value="10" class="form-select">10</option><option value="11" class="form-select">11</option><option value="12" class="form-select">12</option><option value="13" class="form-select">13</option><option value="14" class="form-select">14</option><option value="15" class="form-select">15</option><option value="16" class="form-select">16</option><option value="18" class="form-select">18</option><option value="20" class="form-select">20</option><option value="21" class="form-select">21</option><option value="22" class="form-select">22</option><option value="24" class="form-select">24</option><option value="26" class="form-select">26</option><option value="28" class="form-select">28</option><option value="32" class="form-select">32</option><option value="38" class="form-select">38</option><option value="48" class="form-select">48</option><option value="64" class="form-select">64</option><option value="88" class="form-select">88</option></select>
+                    </div>
+                    <div id="${usul.isim}_mertebe_cesit" class="col-2">Cesit:
+                        <select id="${usul.isim}_select_mertebe_cesit"><option value="" hidden="selected">Çeşit</option><option value="2" class="form-select">2</option><option value="4" class="form-select">4</option><option value="8" class="form-select">8</option><option value="16" class="form-select">16</option></select>
+                    </div>
+                    <div id="${usul.isim}_olcu_sayisi" class="col-4">Olcu: 
+                        <input id="${usul.isim}_input_olcu_sayisi" type="number">
+                    </div>
+                    <div class="col-1">
+                        <button type="button" onclick="removeUsulFromList(this)" class="btn btn-primary"><b>X</b></button>
+                    </div>
+                </div>
+            </li>
+            `);
+
+            targetNode.querySelector("#\\" + usul.isim + "_mertebe_adet").querySelector("#\\" + usul.isim + "_select_mertebe_adet").querySelector("option[value='" + usul.adet + "\']").selected = true;
+            targetNode.querySelector("#\\" + usul.isim + "_mertebe_cesit").querySelector("#\\" + usul.isim + "_select_mertebe_cesit").querySelector("option[value='" + usul.cesit + "\']").selected = true;
+            targetNode.querySelector("#\\" + usul.isim + "_olcu_sayisi").querySelector("#\\" + usul.isim + "_input_olcu_sayisi").value = usul.olcu;
+
+            selected_usuls.push(usul.isim);
+
+        }
+    }
+
+    if (edit_piece_form) {
+        document.getElementById("my_piece_form_select").querySelector("option[value='" + edit_piece_form + "\']").selected = true;
+    }
+
+    if (edit_piece_subcomponents.length != 0) {
+
+        counter = 0;
+
+        for (const subcomponent of edit_piece_subcomponents) {
+
+            selected_subcomponents_list.insertAdjacentHTML('beforeend', `
+            <li class="my_form_subcomponent" id="${subcomponent.subcomponent_isim}_list_item">
+
+                <div class="container" id="auto_${subcomponent.subcomponent_isim}_container_${counter}">
+                    
+                    <div class="row" id="${subcomponent.subcomponent_isim}_item_row">
+
+                        <div class="col-2">
+                            <h3 class="my_form_subcomponent_name" id="${subcomponent.subcomponent_isim}"> ${subcomponent.subcomponent_isim}</h3>
+                        </div>
+
+                        <div class="col-8">
+
+                            <div class="row">
+
+                                <div class="col-3">
+                                    <h6>Eklenecek Çeşni:</h6>
+                                </div>
+
+                                <div class="col-5">
+
+                                    <select class='cesni_select_class' id="${subcomponent.subcomponent_isim}_cesni_options">
+                                        <option value="rast_cesnisi">Rast Çeşnisi</option>
+                                        <option value="usak_cesnisi">Uşak Çeşnisi</option>
+                                        <option value="huseyni_cesnisi">Hüseyni Çeşnisi</option>
+                                        <option value="cargah_cesnisi">Çargah Çeşnisi</option>
+                                        <option value="buselik_cesnisi">Buselik Çeşnisi</option>
+                                        <option value="kurdi_cesnisi">Kürdi Çeşnisi</option>
+                                        <option value="hicaz_cesnisi">Hicaz Çeşnisi</option>
+                                        <option value="hicaz_huzzam_cesnisi">Hicaz (Hüzzam)</option>
+                                        <option value="segah_cesnisi">Segah Çeşnisi</option>
+                                        <option value="ferahnak_cesnisi">Ferahnak Çeşnisi</option>
+                                        <option value="mustear_cesnisi">Müstear Çeşnisi</option>
+                                        <option value="huzzam_cesnisi">Hüzzam Çeşnisi</option>
+                                        <option value="saba_cesnisi">Saba Çeşnisi</option>
+                                        <option value="nisabur_cesnisi">Nişabur Çeşnisi</option>
+                                        <option value="nikriz_cesnisi">Nikriz Çeşnisi</option>
+                                        <option value="pencgah_cesnisi">Pençgah Çeşnisi</option>
+                                    </select>
+
+                                </div>
+
+                                <div class="col-4">
+                                    <button type="button" onclick="addCesniRowToSubcomponent(this)" class="btn btn-primary"><b>Seçili Çeşniyi Ekle</b></button>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+
+                        <div class="col-1">
+                            <button type="button" onclick="removeSubcomponentFromList(this)" class="btn btn-primary"><b>X</b></button>
+                        </div>
+
+                        <div class="row">
+                            <ol class="added_cesni_list_class" id="${subcomponent.subcomponent_isim}_added_cesni_list"></ol>
+                        </div>
+                        
+                    </div>
+                </div>
+                <br>
+            </li>
+            `);
+
+            let added_cesni_list = document.getElementById("auto_" + subcomponent.subcomponent_isim + "_container_" + counter).querySelector(".added_cesni_list_class");
+
+            for (const cesni of subcomponent.cesni) {
+
+                console.log(cesni);
+
+                let selectedCesniOption = document.createElement("li");
+                selectedCesniOption.classList.add("mt-3");
+                selectedCesniOption.id = cesni.cesni_isim + "_item";
+
+                // iteme html ekle:
+                selectedCesniOption.insertAdjacentHTML('beforeend', `
+                    <div class="row">
+                        <div class="selected_cesni_title" id="${cesni.cesni_isim}" class="col-1">
+                            <h6>${cesni.cesni_isim}</h6>
+                        </div>
+                        <div class="col-2">
+                            <h6>Perde: </h6>
+                            <select class="cesni_perde" id="${cesni.cesni_isim}_perde_select">
+                                <option value="kaba_cargah">Kaba Çargah</option>
+                                <option value="yegah">Yegah</option>
+                                <option value="huseyni">Hüseyni Aşiran</option>
+                                <option value="acem_asiran">Acem Aşiran</option>
+                                <option value="rast">Rast</option>
+                                <option value="dugah">Dügah</option>
+                                <option value="buselik">Buselik</option>
+                                <option value="cargah">Çargah</option>
+                                <option value="neva">Neva</option>
+                                <option value="huseyni">Hüseyni</option>
+                                <option value="acem">Acem</option>
+                                <option value="gerdaniye">Gerdaniye</option>
+                                <option value="muhayyer">Muhayyer</option>
+                                <option value="kaba_nim_hicaz">Kaba Nim Hicaz</option>
+                                <option value="kaba_nim_hisar">Kaba Nim Hisar</option>
+                                <option value="dik_acem_asiran">Dik Acem Aşiran</option>
+                                <option value="nim_zirgule">Nim Zirgüle</option>
+                                <option value="kurdi">Kürdi</option>
+                                <option value="dik_buselik">Dik Buselik</option>
+                                <option value="nim_hicaz">Nim Hicaz</option>
+                                <option value="nim_hisar">Nim Hisar</option>
+                                <option value="dik_acem">Dik Acem</option>
+                                <option value="nim_sehnaz">Nim Şehnaz</option>
+                                <option value="sunbule">Sünbüle</option>
+                                <option value="kaba_hicaz">Kaba hicaz</option>
+                                <option value="kaba_hisar">Kaba Hisar</option>
+                                <option value="irak">Irak</option>
+                                <option value="zirgule">Zirgüle</option>
+                                <option value="dik_kirdi">Dik Kirdi</option>
+                                <option value="hicaz">Hicaz</option>
+                                <option value="hisar">Hisar</option>
+                                <option value="evic">Eviç</option>
+                                <option value="sehnaz">Şehnaz</option>
+                                <option value="dik_sunbule">Dik Sünbüle</option>
+                                <option value="kaba_dik_hicaz">Kaba Dik Hicaz</option>
+                                <option value="kaba_dik_hisar">Kaba Dik Hisar</option>
+                                <option value="gevest">Geveşt</option>
+                                <option value="dik_zirgule">Dik Zirgüle</option>
+                                <option value="segah">Segah</option>
+                                <option value="dik_hicaz">Dik Hicaz</option>
+                                <option value="dik_hisar">Dik Hisar</option>
+                                <option value="mahur">Mahur</option>
+                                <option value="dik_sehnaz">Dik Şehnaz</option>
+                                <option value="tiz_segah">Tiz Segah</option>
+                                <option value="dik_gevest">Dik Geveşt</option>
+                                <option value="dik_mahur">Dik Mahur</option>
+                            </select>
+                        </div>
+                        <div class="col-1">
+                            <h6>Büyüklük: </h6>
+                            <select class="cesni_buyukluk" id="${cesni.cesni_isim}_cesni_buyukluk">
+                                <option value="3">3'lü</option>
+                                <option value="4">4'lü</option>
+                                <option value="5">5'li</option>
+                                <option value="6">6'lı</option>
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <div class="row">
+
+                                <div class="col-3">
+                                    <h6>Ölçü Sayısı: </h6>
+                                    <input class="cesni_olcu" id="${cesni.cesni_isim}_olcu_sayisi" type="number">
+                                </div>
+                            
+                                <div class="col-3">
+                                    <h6>Dörtlük Sayısı: </h6>
+                                    <input class="cesni_dortluk" id="${cesni.cesni_isim}_dortluk" type="number">
+                                </div>
+
+                                <div class="col-3">
+                                    <h6>Sekizlik Sayısı: </h6>
+                                    <input class="cesni_sekizlik" id="${cesni.cesni_isim}_sekizlik" type="number">
+                                </div>
+
+                                <div class="col-3">
+                                    <h6>Onaltılık Sayısı: </h6>
+                                    <input class="cesni_onaltilik" id="${cesni.cesni_isim}_onaltilik" type="number">
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-1">
+                            <button type="button" onclick="removeCesniFromList(this)" class="btn btn-primary"><b>X</b></button>
+                        </div>
+
+                        <div class="col-3">
+                            <h6>Ait olduğu usül: </h6>   
+                            <select class="available_usul_list" id="${cesni.cesni_isim}_belonging_usul_list"></select>
+                        </div>
+                    </div>
+                    `);
+
+                added_cesni_list.appendChild(selectedCesniOption);
+
+                let added_cesni_list_parentNode = added_cesni_list.parentNode;
+
+                my_cesni_perde_select = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_perde_select");
+                my_cesni_perde_select.querySelector("option[value='" + cesni.perde + "\']").selected = true;
+
+                my_cesni_buyukluk_select = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_cesni_buyukluk");
+                my_cesni_buyukluk_select.querySelector("option[value='" + cesni.buyukluk + "\']").selected = true;
+
+                my_cesni_olcu_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_olcu_sayisi");
+                my_cesni_olcu_input.value = cesni.olcu_sayisi;
+                
+                my_cesni_dortluk_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_dortluk");
+                my_cesni_dortluk_input.value = cesni.dortluk_sayisi;
+                
+                my_cesni_sekizlik_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_sekizlik");
+                my_cesni_sekizlik_input.value = cesni.sekizlik_sayisi;
+                
+                my_cesni_onaltilik_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_onaltilik");
+                my_cesni_onaltilik_input.value = cesni.onaltilik_sayisi;
+
+            }
+
+            counter++;
+
+        }
+    }
 
     //---------------------------------------------------ENJEKSİYON KISMI--------------------------------------------------
 
