@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponseNotAllowed
 from .forms import PreliminaryDataEntryForm
 from .models import Makam, Usul, Piece
 from django.templatetags.static import static
@@ -87,7 +87,7 @@ def EditPieceView(request, pk):
 
         eser_adi = request.POST.get('eser_adi')
         bestekar = request.POST.get('bestekar')
-        yuzyil = request.POST.get('yuzyil')
+        yuzyil = int(request.POST.get('yuzyil'))
         gufte_yazari = request.POST.get('gufte_yazari')
         gufte_vezin = request.POST.get('gufte_vezin')
         gufte_nazim_bicim = request.POST.get('gufte_nzmbcm')
@@ -97,8 +97,19 @@ def EditPieceView(request, pk):
         form = json.loads(request.POST.get('selected_form'))
         subcomponents = json.loads(request.POST.get('selected_subcomponents'))
 
-        print(piece_to_be_edited)
-        print(eser_adi,bestekar, yuzyil, gufte_yazari, gufte_vezin, gufte_nazim_bicim, gufte_nazim_tur, makam, usul, form, subcomponents)
+        piece_to_be_edited.eser_adi = eser_adi
+        piece_to_be_edited.bestekar = bestekar
+        piece_to_be_edited.yuzyil = yuzyil
+        piece_to_be_edited.gufte_yazari = gufte_yazari
+        piece_to_be_edited.gufte_vezin = gufte_vezin
+        piece_to_be_edited.gufte_nazim_bicim = gufte_nazim_bicim
+        piece_to_be_edited.gufte_nazim_tur = gufte_nazim_tur
+        piece_to_be_edited.makam = makam
+        piece_to_be_edited.usul = usul
+        piece_to_be_edited.form = form
+        piece_to_be_edited.subcomponents = subcomponents
+
+        piece_to_be_edited.save()
 
         return JsonResponse({
             'success': True,
@@ -124,7 +135,7 @@ def EditPieceView(request, pk):
 
     context_dict = {
         'preliminary_data_entry_form': preliminary_data_entry_form,
-        'piece_to_be_edited':piece_to_be_edited,
+        'piece_to_be_edited': piece_to_be_edited,
         'edit_piece_eser_adi': edit_piece_eser_adi,
         'edit_piece_bestekar': edit_piece_bestekar,
         'edit_piece_yuzyil': edit_piece_yuzyil,
@@ -143,6 +154,20 @@ def EditPieceView(request, pk):
     }
 
     return render(request, 'makam_app/edit_piece.html', context=context_dict)
+
+
+@login_required
+def delete_piece(request, pk):
+    piece = get_object_or_404(Piece, pk=pk)
+
+    if piece.creator != request.user:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        piece.delete()
+        return redirect('makam_app:profile')
+
+    return HttpResponseNotAllowed(['POST'])
 
 
 @login_required

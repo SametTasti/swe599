@@ -612,6 +612,9 @@ Parça Düzenle
         elem.parentNode.parentNode.parentNode.parentNode.remove();
     }
 
+    global_counter = 0;
+    
+
     function addCesniRowToSubcomponent(elem) {
 
         // seçilen çeşniyi al:
@@ -729,18 +732,22 @@ Parça Düzenle
                 
                 <div class="col-3">
                     <h6>Ait olduğu usül: </h6>   
-                    <select class="available_usul_list" id="${selected_cesni_value}_belonging_usul_list"></select>
+                    <select class="available_usul_list" id="${selected_cesni_value}_belonging_usul_list_${global_counter}"></select>
                 </div>
             </div>
             `);
 
         added_cesni_list.appendChild(selectedCesniOption);
 
-        populateCesniAvailableSelect();
+        populateCesniAvailableSelect(selected_cesni_value);
     }
 
-    function populateCesniAvailableSelect() {
-        cesni_usuls_select = document.getElementsByClassName('available_usul_list');
+
+    function populateCesniAvailableSelect(str) {
+
+        // cesni_usuls_select = document.getElementsByClassName('available_usul_list');
+
+        cesni_usuls_select = document.getElementById(str + "_belonging_usul_list_" + global_counter);
 
         let available_usul_array = [];
 
@@ -763,13 +770,21 @@ Parça Düzenle
             available_usul_array.push(newUsul)
         }
 
-        for (const cesni_usul of cesni_usuls_select) {
+        console.log(cesni_usuls_select)
 
-            for (const newUsul of available_usul_array) {
-                cesni_usul.appendChild(newUsul);
-            }
-
+        for (const u of available_usul_array) {
+            cesni_usuls_select.appendChild(u);
         }
+
+        // for (const cesni_usul of cesni_usuls_select) {
+
+        //     for (const newUsul of available_usul_array) {
+        //         cesni_usul.appendChild(newUsul);
+        //     }
+
+        // }
+
+        global_counter++;
     }
 
     function removeCesniFromList(elem) {
@@ -796,6 +811,7 @@ Parça Düzenle
                 let bottom_data_row = cesni.children[1];
 
                 let newCesniIsim = top_data_row.querySelector(".selected_cesni_title").id;
+                newCesniIsim = newCesniIsim.replace(/_\d+$/, '');
                 let newCesniPerde = top_data_row.querySelector(".cesni_perde").value;
                 let newCesniBuyukluk = top_data_row.querySelector(".cesni_buyukluk").value;
                 let newCesniOlcu = top_data_row.querySelector(".cesni_olcu").value;
@@ -921,7 +937,7 @@ Parça Düzenle
 
         for (const usul of edit_piece_usul) {
 
-            console.log(usul);
+            
 
             targetNode.insertAdjacentHTML('beforeend', `
             <li id="${usul.isim}">
@@ -945,9 +961,9 @@ Parça Düzenle
             </li>
             `);
 
-            targetNode.querySelector("#\\" + usul.isim + "_mertebe_adet").querySelector("#\\" + usul.isim + "_select_mertebe_adet").querySelector("option[value='" + usul.adet + "\']").selected = true;
-            targetNode.querySelector("#\\" + usul.isim + "_mertebe_cesit").querySelector("#\\" + usul.isim + "_select_mertebe_cesit").querySelector("option[value='" + usul.cesit + "\']").selected = true;
-            targetNode.querySelector("#\\" + usul.isim + "_olcu_sayisi").querySelector("#\\" + usul.isim + "_input_olcu_sayisi").value = usul.olcu;
+            targetNode.querySelector("#" + usul.isim + "_mertebe_adet").querySelector("#" + usul.isim + "_select_mertebe_adet").querySelector("option[value='" + usul.adet + "\']").selected = true;
+            targetNode.querySelector("#" + usul.isim + "_mertebe_cesit").querySelector("#" + usul.isim + "_select_mertebe_cesit").querySelector("option[value='" + usul.cesit + "\']").selected = true;
+            targetNode.querySelector("#" + usul.isim + "_olcu_sayisi").querySelector("#" + usul.isim + "_input_olcu_sayisi").value = usul.olcu;
 
             selected_usuls.push(usul.isim);
 
@@ -1030,23 +1046,23 @@ Parça Düzenle
 
             let added_cesni_list = document.getElementById("auto_" + subcomponent.subcomponent_isim + "_container_" + counter).querySelector(".added_cesni_list_class");
 
-            for (const cesni of subcomponent.cesni) {
+            cesni_counter = 0;
 
-                console.log(cesni);
+            for (const cesni of subcomponent.cesni) {
 
                 let selectedCesniOption = document.createElement("li");
                 selectedCesniOption.classList.add("mt-3");
-                selectedCesniOption.id = cesni.cesni_isim + "_item";
+                selectedCesniOption.id = cesni.cesni_isim + "_item" + cesni_counter;
 
                 // iteme html ekle:
                 selectedCesniOption.insertAdjacentHTML('beforeend', `
                     <div class="row">
-                        <div class="selected_cesni_title" id="${cesni.cesni_isim}" class="col-1">
+                        <div class="selected_cesni_title" id="${cesni.cesni_isim}_${cesni_counter}" class="col-1">
                             <h6>${cesni.cesni_isim}</h6>
                         </div>
                         <div class="col-2">
                             <h6>Perde: </h6>
-                            <select class="cesni_perde" id="${cesni.cesni_isim}_perde_select">
+                            <select class="cesni_perde" id="${cesni.cesni_isim}_${cesni_counter}_perde_select">
                                 <option value="kaba_cargah">Kaba Çargah</option>
                                 <option value="yegah">Yegah</option>
                                 <option value="huseyni">Hüseyni Aşiran</option>
@@ -1097,7 +1113,7 @@ Parça Düzenle
                         </div>
                         <div class="col-1">
                             <h6>Büyüklük: </h6>
-                            <select class="cesni_buyukluk" id="${cesni.cesni_isim}_cesni_buyukluk">
+                            <select class="cesni_buyukluk" id="${cesni.cesni_isim}_${cesni_counter}_cesni_buyukluk">
                                 <option value="3">3'lü</option>
                                 <option value="4">4'lü</option>
                                 <option value="5">5'li</option>
@@ -1109,22 +1125,22 @@ Parça Düzenle
 
                                 <div class="col-3">
                                     <h6>Ölçü Sayısı: </h6>
-                                    <input class="cesni_olcu" id="${cesni.cesni_isim}_olcu_sayisi" type="number">
+                                    <input class="cesni_olcu" id="${cesni.cesni_isim}_${cesni_counter}_olcu_sayisi" type="number">
                                 </div>
                             
                                 <div class="col-3">
                                     <h6>Dörtlük Sayısı: </h6>
-                                    <input class="cesni_dortluk" id="${cesni.cesni_isim}_dortluk" type="number">
+                                    <input class="cesni_dortluk" id="${cesni.cesni_isim}_${cesni_counter}_dortluk" type="number">
                                 </div>
 
                                 <div class="col-3">
                                     <h6>Sekizlik Sayısı: </h6>
-                                    <input class="cesni_sekizlik" id="${cesni.cesni_isim}_sekizlik" type="number">
+                                    <input class="cesni_sekizlik" id="${cesni.cesni_isim}_${cesni_counter}_sekizlik" type="number">
                                 </div>
 
                                 <div class="col-3">
                                     <h6>Onaltılık Sayısı: </h6>
-                                    <input class="cesni_onaltilik" id="${cesni.cesni_isim}_onaltilik" type="number">
+                                    <input class="cesni_onaltilik" id="${cesni.cesni_isim}_${cesni_counter}_onaltilik" type="number">
                                 </div>
                             
                             </div>
@@ -1138,7 +1154,7 @@ Parça Düzenle
 
                         <div class="col-3">
                             <h6>Ait olduğu usül: </h6>   
-                            <select class="available_usul_list" id="${cesni.cesni_isim}_belonging_usul_list"></select>
+                            <select class="available_usul_list" id="${cesni.cesni_isim}_${cesni_counter}_belonging_usul_list"></select>
                         </div>
                     </div>
                     `);
@@ -1147,23 +1163,58 @@ Parça Düzenle
 
                 let added_cesni_list_parentNode = added_cesni_list.parentNode;
 
-                my_cesni_perde_select = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_perde_select");
+                my_cesni_perde_select = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_" + cesni_counter + "_perde_select");
                 my_cesni_perde_select.querySelector("option[value='" + cesni.perde + "\']").selected = true;
 
-                my_cesni_buyukluk_select = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_cesni_buyukluk");
+                my_cesni_buyukluk_select = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_"  + cesni_counter + "_cesni_buyukluk");
                 my_cesni_buyukluk_select.querySelector("option[value='" + cesni.buyukluk + "\']").selected = true;
 
-                my_cesni_olcu_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_olcu_sayisi");
+                my_cesni_olcu_input = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_"  + cesni_counter + "_olcu_sayisi");
                 my_cesni_olcu_input.value = cesni.olcu_sayisi;
-                
-                my_cesni_dortluk_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_dortluk");
+
+                my_cesni_dortluk_input = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_"  + cesni_counter + "_dortluk");
                 my_cesni_dortluk_input.value = cesni.dortluk_sayisi;
-                
-                my_cesni_sekizlik_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_sekizlik");
+
+                my_cesni_sekizlik_input = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_"  + cesni_counter + "_sekizlik");
                 my_cesni_sekizlik_input.value = cesni.sekizlik_sayisi;
-                
-                my_cesni_onaltilik_input = added_cesni_list_parentNode.querySelector("#\\" + cesni.cesni_isim + "_onaltilik");
+
+                my_cesni_onaltilik_input = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_"  + cesni_counter + "_onaltilik");
                 my_cesni_onaltilik_input.value = cesni.onaltilik_sayisi;
+
+                my_cesni_usul = added_cesni_list_parentNode.querySelector("#" + cesni.cesni_isim + "_"  + cesni_counter + "_belonging_usul_list");
+
+                // for (var i = 0; i < select.options.length; i++) {
+                //     // Get the current option
+                //     var option = select.options[i];
+
+                //     // Do something with the option
+                //     console.log(option.value);
+                //     console.log(option.text);
+                // }
+
+                let newUsulOption = document.createElement("option");
+                newUsulOption.value = cesni.ait_oldugu_usul;
+                newUsulOption.text = cesni.ait_oldugu_usul;
+
+                var exists = false;
+
+                for (var i = 0; i < my_cesni_usul.options.length; i++) {
+
+                    var option = my_cesni_usul.options[i];
+
+                    if (option.value == newUsulOption.value) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+
+                if (!exists) {
+                    my_cesni_usul.appendChild(newUsulOption);
+                    newUsulOption.selected = true;
+                }
+
+                cesni_counter++;
 
             }
 
@@ -1189,7 +1240,7 @@ Parça Düzenle
             data: $('form#my_data_form').serialize() + '&selected_makams=' + JSON.stringify(selected_makams) + '&selected_usuls=' + JSON.stringify(usul_array) + '&selected_form=' + JSON.stringify(form_name) + '&selected_subcomponents=' + JSON.stringify(subcomponent_array),
 
             success: function (data) {
-                alert("Yeni parça başarıyla oluşturuldu.");
+                alert("Kaydedildi.");
                 window.location.href = data.url;
             },
             error: function (data) {

@@ -614,6 +614,8 @@ Parça Ekle
         elem.parentNode.parentNode.parentNode.parentNode.remove();
     }
 
+    global_counter = 0;
+
     function addCesniRowToSubcomponent(elem) {
 
         // seçilen çeşniyi al:
@@ -731,18 +733,23 @@ Parça Ekle
                 
                 <div class="col-3">
                     <h6>Ait olduğu usül: </h6>   
-                    <select class="available_usul_list" id="${selected_cesni_value}_belonging_usul_list"></select>
+                    <select class="available_usul_list" id="${selected_cesni_value}_belonging_usul_list_${global_counter}"></select>
                 </div>
             </div>
             `);
 
         added_cesni_list.appendChild(selectedCesniOption);
 
-        populateCesniAvailableSelect();
+        populateCesniAvailableSelect(selected_cesni_value);
     }
 
-    function populateCesniAvailableSelect() {
-        cesni_usuls_select = document.getElementsByClassName('available_usul_list');
+    
+
+    function populateCesniAvailableSelect(str) {
+
+        // cesni_usuls_select = document.getElementsByClassName('available_usul_list');
+        
+        cesni_usuls_select = document.getElementById(str +"_belonging_usul_list_" + global_counter);
 
         let available_usul_array = [];
 
@@ -765,13 +772,21 @@ Parça Ekle
             available_usul_array.push(newUsul)
         }
 
-        for (const cesni_usul of cesni_usuls_select) {
+        console.log(cesni_usuls_select)
 
-            for (const newUsul of available_usul_array) {
-                cesni_usul.appendChild(newUsul);
-            }
-
+        for (const u of available_usul_array) {
+            cesni_usuls_select.appendChild(u);
         }
+
+        // for (const cesni_usul of cesni_usuls_select) {
+            
+        //     for (const newUsul of available_usul_array) {
+        //         cesni_usul.appendChild(newUsul);
+        //     }
+
+        // }
+
+        global_counter++;
     }
 
     function removeCesniFromList(elem) {
