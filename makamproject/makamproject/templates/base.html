@@ -22,25 +22,23 @@
     <div class="container-fluid">
 
       <div class="col-1">
-        <img src="{% static 'itu_logo.jpg' %}" style="width: 30%;" alt="itu_logo">
+        <a class="navbar-brand">
+          <img src="{% static 'itu_logo.jpg' %}" width="40" height="40" alt="itu_logo">
+        </a>
       </div>
 
-      <div class="col-1">
-        <a class="navbar-brand" href="{% url 'makam_app:HomeView' %}"><b>TSM Analiz</b></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      </div>
-      <div class="col-10">
+      <div class="col-11">
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             {% if user.is_authenticated %}
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'makam_app:profile' %}">Profil</span></a>
+              <a class="nav-link" href="{% url 'makam_app:HomeView' %}">Anasayfa</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'makam_app:CreatePieceView' %}">Parça Ekle</span></a>
+              <a class="nav-link" href="{% url 'makam_app:profile' %}">Profil</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'makam_app:CreatePieceView' %}">Parça Ekle</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'makam_app:FindPieceView' %}">Parça Ara</a>
@@ -58,10 +56,7 @@
             {% endif %}
           </ul>
         </div>
-      </div>
-
   </nav>
-  </div>
 
   <div class="container mt-3">
     {% block content %}

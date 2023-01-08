@@ -32,6 +32,9 @@ class Piece(models.Model):
     creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_date = models.DateField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['created_date']
+
     def __str__(self):
-        return f"{self.pk} - {self.eser_adi}"
+        return f"{self.pk} - {self.eser_adi} - {self.creator} tarafından {self.created_date} tarihinde eklendi."
 

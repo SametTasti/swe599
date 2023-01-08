@@ -5,12 +5,13 @@ from .forms import PreliminaryDataEntryForm
 from .models import Makam, Usul, Piece
 from django.templatetags.static import static
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView, DetailView, ListView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 import datetime
 import json
 
@@ -32,13 +33,16 @@ class SignUpView(CreateView):
 class UserPieceView(LoginRequiredMixin, ListView):
     model = Piece
     template_name = 'makam_app/profile.html'
-    paginate_by = 5
 
     def get_queryset(self):
-        return Piece.objects.filter(creator=self.request.user).all()
+        if self.request.user.is_staff:
+            return Piece.objects.all()
+        else:
+            return Piece.objects.filter(creator=self.request.user).all()
 
 
 @login_required
+@permission_required('makam_app.add_piece', raise_exception=True)
 def CreatePieceView(request):
 
     if request.method == 'POST':
@@ -68,6 +72,7 @@ def CreatePieceView(request):
         })
 
     else:
+
         preliminary_data_entry_form = PreliminaryDataEntryForm()
 
         context_dict = {
@@ -79,6 +84,7 @@ def CreatePieceView(request):
 
 
 @login_required
+@permission_required('makam_app.change_piece', raise_exception=True)
 def EditPieceView(request, pk):
 
     piece_to_be_edited = get_object_or_404(Piece, pk=pk)
@@ -157,6 +163,7 @@ def EditPieceView(request, pk):
 
 
 @login_required
+@permission_required('makam_app.delete_piece', raise_exception=True)
 def delete_piece(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
 
@@ -171,6 +178,7 @@ def delete_piece(request, pk):
 
 
 @login_required
+@permission_required('makam_app.view_piece', raise_exception=True)
 def FindPieceView(request):
 
     if request.method == 'POST':
@@ -219,6 +227,7 @@ def FindPieceView(request):
 
 
 @login_required
+@permission_required('makam_app.view_piece', raise_exception=True)
 def QueryResultsView(request):
 
     if request.method == 'POST':
@@ -357,6 +366,7 @@ class AnalyzedByCommonSubcomponent:
 
 
 @login_required
+@permission_required('makam_app.view_piece', raise_exception=True)
 def AnalysisView(request):
 
     analyzed_piece_list = []
