@@ -167,14 +167,17 @@ def EditPieceView(request, pk):
 def delete_piece(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
 
-    if piece.creator != request.user:
+    # Allow admin to delete any piece
+    if request.user.is_staff:
+        if request.method == 'POST':
+            piece.delete()
+            return redirect('makam_app:profile')
+    # Only allow the creator to delete their own piece
+    elif piece.creator != request.user:
         return HttpResponseForbidden()
-
-    if request.method == 'POST':
+    elif request.method == 'POST':
         piece.delete()
         return redirect('makam_app:profile')
-
-    return HttpResponseNotAllowed(['POST'])
 
 
 @login_required
