@@ -50,7 +50,26 @@ Arama Sonuçları
 
                                         {% for cesni_property_name, cesni_property_value in cesni_element.items %}
 
-                                        <b>{{cesni_property_name}}</b> : {{cesni_property_value}}
+                                        <b>
+                                            {% if cesni_property_name == 'perde' %}
+                                            Perde:
+                                            {% elif cesni_property_name == 'buyukluk' %}
+                                            Çeşni Büyüklüğü:
+                                            {% elif cesni_property_name == 'cesni_isim' %}
+                                            Çeşni İsmi:
+                                            {% elif cesni_property_name == 'olcu_sayisi' %}
+                                            Ölçü Sayısı:
+                                            {% elif cesni_property_name == 'dortluk_sayisi' %}
+                                            Dörtlük Sayısı:
+                                            {% elif cesni_property_name == 'ait_oldugu_usul' %}
+                                            Ait Olduğu Usül:
+                                            {% elif cesni_property_name == 'sekizlik_sayisi' %}
+                                            Sekizlik Sayısı:
+                                            {% elif cesni_property_name == 'onaltilik_sayisi' %}
+                                            Onaltılık Sayısı:
+                                            {% endif %}
+                                        </b>
+                                        {{cesni_property_value}}
                                         <br>
 
                                         {% endfor %}
@@ -92,7 +111,7 @@ Arama Sonuçları
             </div>
             <div class="col-5">
                 <h3>Seçilenler:</h3>
-                <ul id="my_selected_pieces_list"></ul>
+                <ol id="my_selected_pieces_list"></ol>
 
             </div>
 
@@ -160,8 +179,6 @@ Arama Sonuçları
 
         console.log(selected_piece_pks);
     }
-
-
 
     $('#submit_all').click(function (event) {
 

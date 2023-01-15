@@ -16,7 +16,6 @@ import datetime
 import json
 
 pseudo_context = {}
-selected_pieces_for_analysis = []
 
 
 def HomeView(request):
@@ -167,12 +166,11 @@ def EditPieceView(request, pk):
 def delete_piece(request, pk):
     piece = get_object_or_404(Piece, pk=pk)
 
-    # Allow admin to delete any piece
     if request.user.is_staff:
         if request.method == 'POST':
             piece.delete()
             return redirect('makam_app:profile')
-    # Only allow the creator to delete their own piece
+
     elif piece.creator != request.user:
         return HttpResponseForbidden()
     elif request.method == 'POST':
@@ -227,6 +225,9 @@ def FindPieceView(request):
             'usl_json': json.dumps(list(Usul.objects.values())),
         }
         return render(request, 'makam_app/find_piece.html', context=context_dict)
+
+
+selected_pieces_for_analysis = []
 
 
 @login_required
