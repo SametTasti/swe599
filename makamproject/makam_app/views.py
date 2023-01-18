@@ -298,11 +298,70 @@ def QueryResultsView(request):
 
             elif key == 'usul':
 
-                print(f"{key} : {my_input_value}")
+                # print(f"{key} : {my_input_value}")
 
-                my_query_string = f"usul__contains"
+                my_usul_query_list = []
 
-                filter_dict[my_query_string] = my_input_value
+                for usul_input in my_input_value:
+
+                    my_usul_query = {}
+
+                    if usul_input['isim']:
+
+                        my_usul_query['isim'] = usul_input['isim']
+
+                    if usul_input['adet']:
+
+                        my_usul_query['adet'] = usul_input['adet']
+
+                    if usul_input['cesit']:
+
+                        my_usul_query['cesit'] = usul_input['cesit']
+
+                    if usul_input['olcu']:
+
+                        my_usul_query['olcu'] = usul_input['olcu']
+
+                    my_usul_query_list.append(my_usul_query)
+
+                pieces_found_by_usul_pks = []
+
+                for my_piece in all_pieces:
+
+                    for my_usul in my_piece.usul:
+
+                        for my_usul_query in my_usul_query_list:
+                            
+                            found = True
+
+                            if 'isim' in my_usul_query and my_usul['isim']:
+
+                                if my_usul_query['isim'] != my_usul['isim']:
+                                    found = False
+                           
+
+                            if 'adet' in my_usul_query and my_usul['adet']:
+                                
+                                if my_usul_query['adet'] != my_usul['adet']:
+                                    found = False
+                            
+
+                            if 'cesit' in my_usul_query and my_usul['cesit']:
+                                
+                                if my_usul_query['cesit'] != my_usul['cesit']:
+                                    found = False
+                            
+
+                            if 'olcu' in my_usul_query and my_usul['olcu']:
+                                
+                                if my_usul_query['olcu'] != my_usul['olcu']:
+                                    found = False
+
+                            if found:
+                                if my_piece.pk not in pieces_found_by_usul_pks:
+                                    pieces_found_by_usul_pks.append(my_piece.pk)
+
+                all_pieces = Piece.objects.filter(pk__in=pieces_found_by_usul_pks)
 
             elif key == 'subcomponents':
 
