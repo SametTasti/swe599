@@ -272,9 +272,17 @@ Parça Ara
         }
     })
 
+    var clicked_makams = [];
+
     document.getElementById("my_makam_list").addEventListener("click", function (e) {
 
         if (e.target && e.target.nodeName == "LI") {
+
+            if (!clicked_makams.includes(e.target)) {
+                clicked_makams.push(e.target);
+            }
+
+            e.target.style.backgroundColor = '#ccffcc';
 
             selected_makams.push(e.target.innerHTML);
 
@@ -296,6 +304,23 @@ Parça Ara
     });
 
     function removeMakamFromList(elem) {
+
+        let elements = elem.parentNode.parentNode.getElementsByClassName("col-11");
+
+        for (e of elements) {
+
+            let my_makam_name = e.innerHTML.trim();
+
+            for (cm of clicked_makams) {
+
+                if (my_makam_name == cm.innerHTML.trim()) {
+                    cm.style.backgroundColor = 'white';
+                    clicked_makams.splice(clicked_makams.indexOf(cm), 1)
+                }
+            }
+
+        }
+
         selected_makams.splice(selected_makams.indexOf(elem.parentNode.parentNode.parentNode.id), 1);
         document.getElementById(elem.parentNode.parentNode.parentNode.id).remove();
     }
@@ -418,9 +443,17 @@ Parça Ara
 
     const observer = new MutationObserver(callback);
 
+    var clicked_usuls = [];
+
     document.getElementById("my_usul_list").addEventListener("click", function (e) {
 
         observer.observe(targetNode, config);
+
+        if (!clicked_usuls.includes(e.target)) {
+            clicked_usuls.push(e.target);
+        }
+
+        e.target.style.backgroundColor = '#ccffcc';
 
         if (e.target && e.target.nodeName == "LI") {
 
@@ -457,6 +490,27 @@ Parça Ara
 
 
     function removeUsulFromList(elem) {
+
+        let elements = elem.parentNode.parentNode.getElementsByClassName("col-3");
+
+        for (e of elements) {
+
+            let my_usul_name = e.innerHTML.trim().replace(/_/g, " ");
+
+            for (cu of clicked_usuls) {
+
+                console.log(cu.innerHTML)
+
+                if (my_usul_name == cu.innerHTML.trim()) {
+
+                    cu.style.backgroundColor = 'white';
+
+                    clicked_usuls.splice(clicked_makams.indexOf(cu), 1)
+                }
+            }
+
+        }
+
         observer.disconnect();
         selected_usuls.splice(selected_usuls.indexOf(elem.parentNode.parentNode.parentNode.id), 1);
         document.getElementById(elem.parentNode.parentNode.parentNode.id).remove();
