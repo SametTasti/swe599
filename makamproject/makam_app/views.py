@@ -179,7 +179,7 @@ def delete_piece(request, pk):
 
 
 @login_required
-@permission_required('makam_app.view_piece', raise_exception=True)
+# @permission_required('makam_app.view_piece', raise_exception=True)
 def FindPieceView(request):
 
     if request.method == 'POST':
@@ -231,7 +231,7 @@ selected_pieces_for_analysis = []
 
 
 @login_required
-@permission_required('makam_app.view_piece', raise_exception=True)
+# @permission_required('makam_app.view_piece', raise_exception=True)
 def QueryResultsView(request):
 
     if request.method == 'POST':
@@ -429,7 +429,7 @@ class AnalyzedByCommonSubcomponent:
 
 
 @login_required
-@permission_required('makam_app.view_piece', raise_exception=True)
+# @permission_required('makam_app.view_piece', raise_exception=True)
 def AnalysisView(request):
 
     analyzed_piece_list = []
