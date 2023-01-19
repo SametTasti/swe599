@@ -12,10 +12,10 @@ Arama Sonuçları
 
         <div class="row">
 
-            <div class="col-7">
+            <div class="col-9">
 
                 <h3>Sonuçlardan Seç:</h3>
-
+                <hr>
                 <ul id="my_pieces_list">
 
                     {% for pieces in pieces_found %}
@@ -27,14 +27,50 @@ Arama Sonuçları
                             <div class="col-10">
 
                                 <div class="row">
-
-                                    <div class="col-6">
-                                        <b><i>Eser Adı:</i></b> <p id="{{pieces.pk}}_piecename">{{pieces.eser_adi}}</p>
+                                    <h6>{{pieces.creator}} tarafından {{pieces.created_date}} tarihinde eklendi.</h6>
+                                    <div class="col-5">
+                                        <b><i>Eser Adı, Bestekar, Yüzyıl, Form:</i></b>
+                                        <p id="{{pieces.pk}}_piecename">. {{pieces.eser_adi}}</p>
+                                        <p id="{{pieces.pk}}_pieceauthor">. {{pieces.bestekar}}</p>
+                                        <p id="{{pieces.pk}}_piececentury">. {{pieces.yuzyil}}. yüzyıl</p>
+                                        <p id="{{pieces.pk}}_pieceform">.{{pieces.form}}</p>
+                                        <hr>
+                                        <b><i>Güfte Bilgileri:</i></b>
+                                        <p id="{{pieces.pk}}_piecename">. {{pieces.gufte_yazari}}</p>
+                                        <p id="{{pieces.pk}}_pieceauthor">. {{pieces.gufte_vezin}}</p>
+                                        <p id="{{pieces.pk}}_piececentury">. {{pieces.gufte_nazim_bicim}}</p>
+                                        <p id="{{pieces.pk}}_piececentury">. {{pieces.gufte_nazim_tur}}</p>
+                                        <hr>
+                                        <b><i>Makam:</i></b>
+                                        <ol id="{{pieces.pk}}_piecemakam">
+                                            {% for makam in pieces.makam %}
+                                            <li>
+                                                {{makam}}
+                                                <br>
+                                            </li>
+                                            {% endfor %}
+                                        </ol>
+                                        <hr>
+                                        <b><i>Usül:</i></b>
+                                        <ol id="{{pieces.pk}}_pieceusul">
+                                            {% for usul in pieces.usul %}
+                                            <li>
+                                                <b>İsim:</b> {{usul.isim}}
+                                                <br>
+                                                <b>Zaman:</b> {{usul.adet}}
+                                                <br>
+                                                <b>Mertebe:</b> {{usul.cesit}}
+                                                <br>
+                                                <b>Ölçü:</b> {{usul.olcu}}
+                                                <hr>
+                                            </li>
+                                            {% endfor %}
+                                        </ol>
                                         <br>
-                                        <b><i>Bestekar:</i></b> <p id="{{pieces.pk}}_pieceauthor">{{pieces.bestekar}}</p>
+
                                     </div>
 
-                                    <div class="col-6">
+                                    <div class="col-7">
                                         {% for subcomponent in pieces.subcomponents %}
 
                                         <b><i>Bileşen İsmi:</i></b> {{subcomponent.subcomponent_isim}}
@@ -109,7 +145,7 @@ Arama Sonuçları
                 </ul>
 
             </div>
-            <div class="col-5">
+            <div class="col-3">
                 <h3>Seçilenler:</h3>
                 <ol id="my_selected_pieces_list"></ol>
 
@@ -146,7 +182,7 @@ Arama Sonuçları
             new_li.id = selected_piece_id + '_selected_item';
 
             selected_piece_list.appendChild(new_li);
-            
+
             piece_name = document.getElementById(selected_piece_id + '_piecename').innerHTML;
             author_name = document.getElementById(selected_piece_id + '_pieceauthor').innerHTML;
 

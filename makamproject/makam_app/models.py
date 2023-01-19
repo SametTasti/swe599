@@ -33,7 +33,7 @@ class Piece(models.Model):
     created_date = models.DateField(null=True, blank=True)
 
     class Meta:
-        ordering = ['created_date']
+        ordering = ['-created_date']
 
     def __str__(self):
         return f"{self.pk} - {self.eser_adi} - {self.creator} tarafından {self.created_date} tarihinde eklendi."
