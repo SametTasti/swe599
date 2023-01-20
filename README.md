@@ -38,3 +38,4 @@ For Unix:
 2. [Download Python from here.](https://www.python.org/downloads/release/python-3110/)
 3. [Download Git from here.](https://git-scm.com/downloads)
 4. [Download PostgreSQL from here.](https://www.postgresql.org/download/)
+5. [Download pgAdmin 4 from here.](https://www.pgadmin.org/download/)
