@@ -1,0 +1,587 @@
+Abı Kevser
+Acem
+Acem Aşiran
+Acem Ba Zir Keşide
+Acem Buselik
+Acem Irak
+Acem Kürdi
+Acem Murassa
+Acem Rast
+Acem Zemzeme
+Acem Zir Keşide
+Acemli Rast
+Agaazei Kabili
+Ahengi Tarab
+Akberi
+Anber Efşan
+Araban
+Araban Kürdi
+Araban Nigar
+Arabanı Cedid
+Arazbar
+Arazbar Buselik
+Arazbar Zemzeme
+Avazı Zenbür
+Azra
+Aşiran
+Aşiran Maye
+Aşiran Vefadar
+Aşiran Zemzeme
+Aşk Efza
+Badı Saba
+Bahar
+Bahri Nazik
+Bayati
+Bayati Araban
+Bayati Araban Buselik
+Bayati Aşiran
+Bayati Buselik
+Bayati Hisar
+Bayati Isfahan
+Bayati Kürdi
+Bendi Buselik
+Bendi Hisar
+Beste Hisar
+Beste Isfahan
+Beste Nigar
+Beste Nigar Hisarek
+Beste Nigarı Atiyk
+Beste Nigarı Kadim
+Beynel Bahreyn
+Beyza
+Bezmara
+Bezmi Tarab
+Buhari
+Buselik
+Buselik Aşiran
+Buselik Gerdaniye
+Buselik Geveşt
+Buselik Maye
+Buselik Nevrüz
+Buselik Selmek
+Buselik Şehnaz
+Büstan
+Büzürk
+Büzürk Gerdaniye
+Büzürk Geveşt
+Büzürk Maye
+Büzürk Nevrüz
+Büzürk Selmek
+Büzürk Şehnaz
+Canfeza
+Çargah
+Çargah Acem
+Çargah Gerdaniye
+Çargah Mahür
+Çehar Agaazin
+Danişveran
+Daği Bayati
+Dil Ara
+Dil Aviz
+Dil Efruz
+Dil Keşide
+Dil Nişin
+Dil Rüba
+Dil Süz
+Dildar
+Dilkeş Haveran
+Dilküşa
+Dost Gahi
+Dügah
+Dügah Buselik
+Dügah Maye
+Dügahı Acem
+Dügahı Kadim
+Ebü Selik
+Efrühiten
+Evc
+Evc Aşiran
+Evc Buselik
+Evc Gerdaniye
+Evc Isfahan
+Evc Maklüb
+Evc Maye
+Evc Nihavendi
+Evcara
+Evci Muhalif
+Ferah
+Ferah Aver
+Ferah Zayi
+Ferahfeza
+Ferahnak
+Ferahnüma
+Ferahzar
+Gamz Eda
+Gazal
+Gerdaniye
+Gerdaniye Buselik
+Gerdaniye Büzürk
+Gerdaniye Hicaz
+Gerdaniye Hüseyni
+Gerdaniye Irak
+Gerdaniye Isfahan
+Gerdaniye Kürdi
+Gerdaniye Küçek
+Gerdaniye Neva
+Gerdaniye Nigar
+Gerdaniye Nikrizi
+Gerdaniye Rast
+Gerdaniye Rehavi
+Gerdaniye Uşşak
+Gerdaniye Zirgüle
+Geveşt
+Geveşt Buselik
+Geveşt Büzürk
+Geveşt Gerdaniye
+Geveşt Hicaz
+Geveşt Hüseyni
+Geveşt Irak
+Geveşt Isfahan
+Geveşt Küçek
+Geveşt Neva
+Geveşt Rehavi
+Geveşt Uşşak
+Geveşt Zirgüle
+Goncai Rana
+Gururi
+Gül Ruh
+Güldeste
+Gülistan
+Gülizar
+Gülnari
+Gülzar
+Gülşeni Vefa
+Hadra
+Harran
+Haver
+Hayali Murad
+Hayan
+Hazan
+Heftgah
+Hicaz
+Hicaz Acem
+Hicaz Aşiran
+Hicaz Buselik
+Hicaz Büzürk
+Hicaz Gerdaniye
+Hicaz Geveşt
+Hicaz Irak
+Hicaz Maye
+Hicaz Nevrüz
+Hicaz Selmek
+Hicaz Zemzeme
+Hicaz Şehnaz
+Hicazeyn
+Hicazi Hüseyni
+Hicazi Isfahan
+Hicazi Uşşak
+Hicazkar
+Hicazkar Buselik
+Hicazkarı Kürdi
+Hicazı Hicaz
+Hicazı Muhalif
+Hicazı Reke
+Hicazı Türki
+Hisar
+Hisar Aşiran
+Hisar Buselik
+Hisar Evc
+Hisar Vechi Şehnaz
+Hisarek
+Hisarı Büzürk
+Hisarı Gayrı Müstear
+Hisarı Kadim
+Hisarı Kürdi
+Hisarı Nik
+Hocest
+Horasan
+Hoş Sera
+Hucet
+Hudavendigar
+Hufte Isfahan
+Huzi Aşiran
+Hümayün
+Hüseyni
+Hüseyni Acem
+Hüseyni Aşiran
+Hüseyni Buselik
+Hüseyni Gerdaniye
+Hüseyni Geveşt
+Hüseyni Horasani
+Hüseyni Kürdi
+Hüseyni Nevrüz
+Hüseyni Nikriz
+Hüseyni Rehavi
+Hüseyni Saba
+Hüseyni Şehnaz
+Hüsnü An
+Hüzi
+Hüzi Buselik
+Hüzzam
+Hüzzamı Cedid
+Hüzzamı Kadim
+Hüzzamı Rümi
+Ifahanı Cedid
+Irak
+Irak Geceyşt
+Irak Gerdaniye
+Irak Maye
+Irak Nevrüz
+Irak Selmek
+Irak Şehnaz
+Irakı Acem
+Isfahan
+Isfahan Buselik
+Isfahan Gerdaniye
+Isfahan Geveşt
+Isfahan Irak
+Isfahan Maye
+Isfahan Nevrüz
+Isfahan Selmek
+Isfahan Zemzeme
+Isfahan Şehnaz
+Isfahanek
+Isfahaneki Atiyk
+Isfahaneki Cedid
+Isfahanı Sultani
+Kabili
+Karcığar
+Kebüter
+Kürdi
+Kürdi Aşiran
+Kürdili Hicazkar
+Kürdili Hümayün
+Kürdili Çargah
+Küçek
+Küçek Geveşt
+Küçek Maye
+Küçek Nevrüz
+Küçek Selmek
+Küçek Sümbüle
+Küçek Zemzeme
+Küçek Şehnaz
+Lale Gül
+Lale Rüh
+Mahür
+Mahür Aşiran
+Mahür Buselik
+Mahür Han
+Mahürek
+Mahüri
+Mahüri Kebir
+Mahüri Kebiri Kadim
+Mahüri Sagir
+Matlüb
+Matlübek
+Maveraünnehr
+Maye
+Maye Buselik
+Maye Büzürk
+Maye Hicaz
+Maye Hüseyni
+Maye Irak
+Maye Isfahan
+Maye Küçek
+Maye Neva
+Maye Rast
+Maye Rehavi
+Maye Uşşak
+Maye Zirgüle
+Mayei Atiyk
+Mayei Kebir
+Mayei Kevser
+Maşük
+Meclis Efrüz
+Mellahi
+Mezmim
+Mihri Can
+Muhalif
+Muhalifek
+Muhalifi Irak
+Muhalifi Rast
+Muhayyer
+Muhayyer Buselik
+Muhayyer Irak
+Muhayyer Kürdi
+Muhayyer Segah
+Muhayyer Sümbüle
+Muhayyer Zirgüle
+Muhayyer Zirkeş
+Müberkaa
+Mücenebür Remel
+Müjdegani
+Mürgak
+Müstear
+Müstearek
+Müteaddi
+Mütedil
+Mütrıban
+Müvafık
+Müşküye
+Na Murad
+Naz
+Nazenin
+Nazu Niyaz
+Nağmei Kabil
+Necdi Hüseyni
+Nesim
+Nev Eda
+Nev Eser
+Nev Reside
+Neva
+Neva Acem
+Neva Aşiran
+Neva Buselik
+Neva Gerdaniye
+Neva Geveşt
+Neva Hüseyni
+Neva Kürdi
+Neva Maye
+Neva Nevrüz
+Neva Selmek
+Neva Şehnaz
+Nevayı Uşşak
+Nevaziş
+Nevbahar
+Nevrüz
+Nevrüz Bayati
+Nevrüz Buselik
+Nevrüz Büzürk
+Nevrüz Hicaz
+Nevrüz Hüseyni
+Nevrüz Irak
+Nevrüz Isfahan
+Nevrüz Küçek
+Nevrüz Neva
+Nevrüz Rehavi
+Nevrüz Saba
+Nevrüz Uşşak
+Nevrüz Zirgüle
+Nevrüzi Acem
+Nevrüzi Arab
+Nevrüzi Hara
+Nevrüzi Rast
+Nevrüzi Rümi
+Nevrüzi Sultani
+Neşat Aver
+Nigar
+Nigarek
+Nigarçek
+Nigarı Nik
+Nigarı Nik Acem
+Nihavend
+Nihavendi Cedid
+Nihavendi Kebir
+Nihavendi Rümi
+Nihavendi Sagir
+Nikriz
+Nikriz Segah
+Nikrizi Kebir
+Nikrizi Sagir
+Nişabür
+Nişabürek
+Nühüft
+Nühüft Hicazi
+Nühüfti Kadim
+Pay Zeni Saba
+Pençgah
+Pençgahı Aşl
+Pençgahı Zaid
+Perzerin
+Pesendide
+Püşegan
+Rahat Feza
+Rahatül Ervah
+Rahi Gül
+Rahi Har Ken
+Rahi Har Keş
+Rahi Hüsrevani
+Rahi Rüh
+Rahi Şeb Diz
+Ramiş Huvar
+Ramişi Can
+Rast
+Rast Acem
+Rast Gerdaniye
+Rast Geveşt
+Rast Haveran
+Rast Kürdi
+Rast Mahir
+Rast Maye
+Rast Nevrüz
+Rast Selmek
+Rast Şehnaz
+Rastı Cedid
+Rastı Kebir
+Rehavi
+Rehavi Gerdaniye
+Rehavi Geveşt
+Rehavi Maye
+Rehavi Nevrüz
+Rehavi Selmek
+Rehavi Şehnaz
+Rekb
+Rekbi Nevrüz
+Rengi Dil
+Reva Irak
+Revnak Nüma
+Ridayi
+Rüh
+Rüh Efza
+Rühnevaz
+Rüyi Aşiran
+Rüyi Hicaz
+Rüyi Irak
+Rıdvan
+Saba
+Saba Aşiran
+Saba Buselik
+Saba Uşşak
+Saba Zemzeme
+Safa
+Sazkar
+Se Bahr
+Sebz Ender Sebz
+Sebz Ender Sebzi Hisar
+Sebz Ender Sebzi Kadim
+Sebzi
+Sebzi Hisar
+Sebzi Taze
+Segah
+Segah Acem
+Segah Araban
+Segah Maye
+Segah Muhayyer
+Selmek
+Selmek Büzürk
+Selmek Hicaz
+Selmek Hüseyni
+Selmek Küçek
+Selmek Rast
+Selmek Rehavi
+Selmek Zirgüle
+Selmeki Kebir
+Selmeki Sagir
+Selmekırak
+Selmekısfahan
+Ser Bülend
+Ser Henk
+Serendaz
+Siphir
+Siphir Hüseyni
+Siphir Uşşak
+Sireng
+Sultanı Buselik
+Sultanı Cedid
+Sultanı Neva
+Sultanı Segah
+Sultanı Yegah
+Sultanıırak
+Suzi Dil
+Suzi Dilara
+Sünbüle
+Sünbüle Nihavend
+Sünbülei Kadim
+Süzinak
+Şad Kamı
+Şah
+Şahi
+Şahvar
+Şeddi Araban
+Şehnaz
+Şehnaz Aşiran
+Şehnaz Buselik
+Şehnaz Büzürk
+Şehnaz Haveran
+Şehnaz Hicaz
+Şehnaz Hüseyni
+Şehnaz Kürdi
+Şehnaz Küçek
+Şehnaz Neva
+Şehnaz Rast
+Şehnaz Rehavi
+Şehnaz Uşşak
+Şehnaz Zirgüle
+Şehri Naz
+Şehvar
+Şems Efrüz
+Şeref Nüma
+Şevk Aver
+Şevk Efza
+Şevk Engiz
+Şevki Cedid
+Şevki Dil
+Şevki Serab
+Şevki Tarab
+Şeşgah
+Şiar
+Şinaver
+Şiraz
+Şiraz Sünbüle
+Şirin
+Şivekar
+Şivekeş
+Şivenüma
+Şüri
+Şüster
+Tahir
+Tahir Buselik
+Tahir Kürdi
+Tahiri Kebir
+Tahiri Sagir
+Tanık
+Tarzı Bihin
+Tarzı Cedid
+Tarzı Nevin
+Tebriz
+Tehrizi
+Tereşşüd
+Terkibi Saba
+Tüvanger
+Urfa Mahür
+Uzzal
+Uzzal Acem
+Uzzal Hüseyni
+Uzzal Şehnaz
+Uşşak
+Uşşak Aşiran
+Uşşak Gerdaniye
+Uşşak Geveşt
+Uşşak Maye
+Uşşak Nevrüz
+Uşşak Selmek
+Uşşak Şehnaz
+Vamık
+Vechi Arazbar
+Vechi Buselik
+Vechi Hüseyni
+Vechi Şehnaz
+Yar
+Yegah
+Zadı Dil
+Zavil
+Zavili
+Zavili Segah
+Zaviliısfahan
+Zemzem
+Zemzeme
+Zemzeme Kürdi
+Zende Rüd
+Zengüle
+Zengüle Buselik
+Zengüle Gerdaniye
+Zengüle Geveşt
+Zengüle Maye
+Zengüle Nevrüz
+Zengüle Selmek
+Zengüle Şehnaz
+Zengüleli Süzinak
+Zevk Bahş
+Zevk u Tarab
+Zevki Dil
+Zirefkend
+Zirefkend Şarkı
+Zirefkendi Büzürk
+Zirefkendi Küçek
+Zirefkendi Rümi
+Zirkeş Haveran
